@@ -1,5 +1,5 @@
 ## Changelog ##
-#25 March 2021 Jon Bråte
+# 25 March 2021 Jon Bråte
 # Use hard links instead of soft links
 # Save error report for the md5 checks
 # Run the md5 checks at the end
@@ -12,6 +12,11 @@
 # Substitute FHI with MIK or another lab that generated the sample. 
 # The name must match exactly what is used in the different filenames.
 
+# Learning:
+# https://stackoverflow.com/questions/58108699/bash-what-is-the-point-of-restoring-positional-arguments-with-set
+
+# https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+
 PPOSITIONAL=()
 while [[ $# -gt 0 ]]
 do
@@ -23,9 +28,16 @@ case $key in
     shift # past argument
     shift # past value
     ;;
+    -t|--type)
+    file_type="$2"
+    shift # past argument
+    shift # past value
+    ;;    
 esac
 done
 
+echo "RUN ID = ${run_id}"
+echo "FILE TYPE = ${file_type}"
 
 if [ -z "${run_id}" ]
 then
@@ -34,6 +46,14 @@ then
 	exit 1
 	
 fi
+
+# For development purpose. Block starts here:
+: <<'END'
+
+## Test move files ##
+
+cd /home/jonbra/FHI/Prosjekter/FHI-scripts/file-import
+for files in 
 
 ## Move files ##
 
@@ -85,3 +105,4 @@ mv *.md5 /tsd/p1516/data/durable/${run_id}_NSC/md5/
 cd /tsd/p1516/data/durable/${run_id}_NSC/variants/
 md5sum -c *.md5 >> /tsd/p1516/data/durable/${run_id}_NSC/md5/md5sum_check.log
 mv *.md5 /tsd/p1516/data/durable/${run_id}_NSC/md5/
+END
