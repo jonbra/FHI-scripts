@@ -1,4 +1,9 @@
-file-export/
-file-import/
-FHI_NSC/
-MIK_NSC/
+file-export/*
+file-import/*
+FHI_NSC/*
+MIK_NSC/*
+
+# Ignore Nextflow files
+.nextflow*
+work/*
+results/*
