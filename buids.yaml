@@ -1,0 +1,156 @@
+# This is where we define which builds we'd like to run.
+# This example includes one minimal global build.
+
+# Each build needs a name, a defined subsampling process, and geographic attributes used for subsampling.
+# Geography is specified by build attributes (e.g., `region`, `country`, `division`, `location`) that are referenced from subsampling schemes.
+
+# The default config file, `./defaults/parameters.yaml` has reasonable default subsampling methods for each geographic resolution.
+# These subsample primarily from the area of interest ("focus"), and add in background ("contextual") sequences from the rest of the world.
+# Contextual sequences that are genetically similar to (hamming distance) and geographically near the focal sequences are heavily prioritized.
+
+# S3_DST_BUCKET: "nextstrain-ncov-private"
+# S3_DST_COMPRESSION: "xz"
+# S3_DST_ORIGINS: ["gisaid"]
+# upload:
+#   - build-files
+
+# S3_BUCKET: "nextstrain-niph"
+use_nextalign: true
+genes: ["ORF1a", "ORF1b", "S", "ORF3a", "E", "M", "ORF6", "ORF7a", "ORF7b", "ORF8", "N", "ORF9b"]
+
+
+# In this example, we use these default methods. See other templates for examples of how to customize this subsampling scheme.
+builds:
+
+#  omicron_ba_two:
+#    region: global
+#    country: Norway
+#    subsampling_scheme: omicron-batwo-scheme
+#    pango_lineage: "['BA.2', 'BA.2.1', 'BA.2.2', 'BA.2.3', 'BA.2.3.1', 'BA.2.3.2', 'BA.2.3.3', 'BA.2.3.4', 'BA.2.3.5', 'BA.2.3.6', 'BA.2.3.7', 'BA.2.3.8', 'BA.2.3.9', 'BA.2.3.10', 'BA.2.3.11', 'BA.2.3.12', 'BA.2.3.13', 'BA.2.3.14', 'BA.2.3.15', 'BA.2.3.16', 'BA.2.3.17', 'BA.2.3.18', 'BA.2.4', 'BA.2.5', 'BA.2.6', 'BA.2.7', 'BA.2.8', 'BA.2.9', 'BA.2.9.1', 'BA.2.9.2', 'BA.2.9.3', 'BA.2.9.4', 'BA.2.10', 'BA.2.10.1', 'BA.2.10.2', 'BA.2.10.3', 'BA.2.11', 'BA.2.12', 'BA.2.12.1', 'BA.2.12.2', 'BA.2.13', 'BA.2.14', 'BA.2.15', 'BA.2.16', 'BA.2.17', 'BA.2.18', 'BA.2.19', 'BA.2.20', 'BA.2.21', 'BA.2.22', 'BA.2.23', 'BA.2.23.1', 'BA.2.24', 'BA.2.25', 'BA.2.25.1', 'BA.2.26', 'BA.2.27', 'BA.2.28', 'BA.2.29', 'BA.2.30', 'BA.2.31', 'BA.2.32', 'BA.2.33', 'BA.2.34', 'BA.2.35', 'BA.2.36', 'BA.2.37', 'BA.2.38', 'BA.2.39', 'BA.2.40', 'BA.2.40.1','BA.2.41', 'BA.2.42', 'BA.2.43', 'BA.2.44', 'BA.2.45', 'BA.2.46', 'BA.2.47', 'BA.2.48', 'BA.2.49', 'BA.2.50', 'BA.2.51', 'BA.2.52', 'BA.2.53', 'BA.2.54', 'BA.2.55', 'BA.2.56', 'BA.2.57', 'BA.2.58', 'BA.2.59', 'BA.2.60', 'BA.2.61', 'BA.2.62', 'BA.2.63', 'BA.2.64', 'BA.2.65', 'BA.2.66', 'BA.2.67', 'BA.2.68', 'BA.2.69', 'BA.2.70', 'BA.2.71', 'BA.2.72', 'BA.3', 'BA.3.1', 'BA.4', 'BA.4.1', 'BA.4.2', 'BA.5', 'BA.5.1', 'BA.5.2', 'BA.5.3', 'BA.5.4', 'BA.5.5', 'XE', 'XG', 'XH', 'XJ', 'XK', 'XL', 'XM', 'XN', 'XP', 'XQ', 'XR', 'XT', 'XU']"
+
+  omicron_ba_five:
+    region: global
+    country: Norway
+    subsampling_scheme: omicron-bafive-scheme
+#    pango_lineage: "['BA.2', 'BA.2.1', 'BA.2.2', 'BA.2.3', 'BA.2.3.1', 'BA.2.3.2', 'BA.2.3.3', 'BA.2.3.4', 'BA.2.3.5', 'BA.2.3.6', 'BA.2.3.7', 'BA.2.3.8', 'BA.2.3.9', 'BA.2.3.10', 'BA.2.3.11', 'BA.2.3.12', 'BA.2.3.13', 'BA.2.3.14', 'BA.2.3.15', 'BA.2.3.16', 'BA.2.3.17', 'BA.2.3.18', 'BA.2.4', 'BA.2.5', 'BA.2.6', 'BA.2.7', 'BA.2.8', 'BA.2.9', 'BA.2.9.1', 'BA.2.9.2', 'BA.2.9.3', 'BA.2.9.4', 'BA.2.10', 'BA.2.10.1', 'BA.2.10.2', 'BA.2.10.3', 'BA.2.11', 'BA.2.12', 'BA.2.12.1', 'BA.2.12.2', 'BA.2.13', 'BA.2.14', 'BA.2.15', 'BA.2.16', 'BA.2.17', 'BA.2.18', 'BA.2.19', 'BA.2.20', 'BA.2.21', 'BA.2.22', 'BA.2.23', 'BA.2.23.1', 'BA.2.24', 'BA.2.25', 'BA.2.25.1', 'BA.2.26', 'BA.2.27', 'BA.2.28', 'BA.2.29', 'BA.2.30', 'BA.2.31', 'BA.2.32', 'BA.2.33', 'BA.2.34', 'BA.2.35', 'BA.2.36', 'BA.2.37', 'BA.2.38', 'BA.2.39', 'BA.2.40', 'BA.2.40.1','BA.2.41', 'BA.2.42', 'BA.2.43', 'BA.2.44', 'BA.2.45', 'BA.2.46', 'BA.2.47', 'BA.2.48', 'BA.2.49', 'BA.2.50', 'BA.2.51', 'BA.2.52', 'BA.2.53', 'BA.2.54', 'BA.2.55', 'BA.2.56', 'BA.2.57', 'BA.2.58', 'BA.2.59', 'BA.2.60', 'BA.2.61', 'BA.2.62', 'BA.2.63', 'BA.2.64', 'BA.2.65', 'BA.2.66', 'BA.2.67', 'BA.2.68', 'BA.2.69', 'BA.2.70', 'BA.2.71', 'BA.2.72', 'BA.3', 'BA.3.1', 'BA.4', 'BA.4.1', 'BA.4.2', 'BA.5', 'BA.5.1', 'BA.5.2', 'BA.5.3', 'BA.5.4', 'BA.5.5', 'XE', 'XG', 'XH', 'XJ', 'XK', 'XL', 'XM', 'XN', 'XP', 'XQ', 'XR', 'XT', 'XU']"
+
+#  omicron_ba_four:
+#    region: global
+#    country: Norway
+#    subsampling_scheme: omicron-bafour-scheme
+#    pango_lineage: "['BA.2', 'BA.2.1', 'BA.2.2', 'BA.2.3', 'BA.2.3.1', 'BA.2.3.2', 'BA.2.3.3', 'BA.2.3.4', 'BA.2.3.5', 'BA.2.3.6', 'BA.2.3.7', 'BA.2.3.8', 'BA.2.3.9', 'BA.2.3.10', 'BA.2.3.11', 'BA.2.3.12', 'BA.2.3.13', 'BA.2.3.14', 'BA.2.3.15', 'BA.2.3.16', 'BA.2.3.17', 'BA.2.3.18', 'BA.2.4', 'BA.2.5', 'BA.2.6', 'BA.2.7', 'BA.2.8', 'BA.2.9', 'BA.2.9.1', 'BA.2.9.2', 'BA.2.9.3', 'BA.2.9.4', 'BA.2.10', 'BA.2.10.1', 'BA.2.10.2', 'BA.2.10.3', 'BA.2.11', 'BA.2.12', 'BA.2.12.1', 'BA.2.12.2', 'BA.2.13', 'BA.2.14', 'BA.2.15', 'BA.2.16', 'BA.2.17', 'BA.2.18', 'BA.2.19', 'BA.2.20', 'BA.2.21', 'BA.2.22', 'BA.2.23', 'BA.2.23.1', 'BA.2.24', 'BA.2.25', 'BA.2.25.1', 'BA.2.26', 'BA.2.27', 'BA.2.28', 'BA.2.29', 'BA.2.30', 'BA.2.31', 'BA.2.32', 'BA.2.33', 'BA.2.34', 'BA.2.35', 'BA.2.36', 'BA.2.37', 'BA.2.38', 'BA.2.39', 'BA.2.40', 'BA.2.40.1','BA.2.41', 'BA.2.42', 'BA.2.43', 'BA.2.44', 'BA.2.45', 'BA.2.46', 'BA.2.47', 'BA.2.48', 'BA.2.49', 'BA.2.50', 'BA.2.51', 'BA.2.52', 'BA.2.53', 'BA.2.54', 'BA.2.55', 'BA.2.56', 'BA.2.57', 'BA.2.58', 'BA.2.59', 'BA.2.60', 'BA.2.61', 'BA.2.62', 'BA.2.63', 'BA.2.64', 'BA.2.65', 'BA.2.66', 'BA.2.67', 'BA.2.68', 'BA.2.69', 'BA.2.70', 'BA.2.71', 'BA.2.72', 'BA.3', 'BA.3.1', 'BA.4', 'BA.4.1', 'BA.4.2', 'BA.5', 'BA.5.1', 'BA.5.2', 'BA.5.3', 'BA.5.4', 'BA.5.5', 'XE', 'XG', 'XH', 'XJ', 'XK', 'XL', 'XM', 'XN', 'XP', 'XQ', 'XR', 'XT', 'XU']"
+
+ #  Nor-omicron-all:
+ #   region: global
+ #   country: Norway
+ #   subsampling_scheme: all
+
+subsampling:
+
+  omicron-batwo-scheme:
+    country:
+      group_by: "year month"
+      max_sequences: 30000
+#      query: --query "(country == '{country}') & (pango_lineage in {pango_lineage})"
+      query: --query "(country == '{country}') & (pango_lineage.str.startswith('BA.2'))"
+    related:
+      group_by: "country year month"
+      max_sequences: 2000
+      sampling_scheme: "--probabilistic-sampling"
+#      query: --query "(country != '{country}') & (pango_lineage in {pango_lineage})"
+      query: --query "(country != '{country}') & (pango_lineage.str.startswith('BA.2'))"
+      priorities:
+        type: "proximity"
+        focus: "country"
+
+  omicron-bafive-scheme:
+    country:
+      group_by: "year month"
+      max_sequences: 30000
+#     query: --query "(country == '{country}') & (pango_lineage in {pango_lineage})"
+#      query: --query "(country == '{country}') & (pango_lineage.str.startswith('BA.5'))"
+      query: --query "(country == '{country}')"
+    related:
+      group_by: "country year month"
+      max_sequences: 2000
+      sampling_scheme: "--probabilistic-sampling"
+#      query: --query "(country != '{country}') & (pango_lineage in {pango_lineage})"
+      query: --query "(country != '{country}')"
+      priorities:
+        type: "proximity"
+        focus: "country"
+
+  omicron-bafour-scheme:
+    country:
+      group_by: "year month"
+      max_sequences: 30000
+#     query: --query "(country == '{country}') & (pango_lineage in {pango_lineage})"
+      query: --query "(country == '{country}') & (pango_lineage.str.startswith('BA.4'))"
+    related:
+      group_by: "country year month"
+      max_sequences: 2000
+      sampling_scheme: "--probabilistic-sampling"
+#      query: --query "(country != '{country}') & (pango_lineage in {pango_lineage})"
+      query: --query "(country != '{country}') & (pango_lineage.str.startswith('BA.4'))"
+      priorities:
+        type: "proximity"
+        focus: "country"
+
+# remove S dropout sequences and sequences without division label in US
+filter:
+  exclude_where: "division='USA' purpose_of_sequencing='S dropout'"
+  # Removing sequences with lower than 99% coverage
+  min_length: 28500
+  # I don't want Omicron sequences that are before autumn 2021.
+  min_date: 2021.75
+
+inputs:
+#    metadata: "s3://nextstrain-ncov-private/metadata.tsv.gz"
+#    filtered: "s3://nextstrain-ncov-private/filtered.fasta.xz"
+  - name: gisaid
+    metadata: data/2022.09.05/2022-09-05_Gisaid.metadata.tsv
+    sequences: data/2022.09.05/2022-09-05_Gisaid.fasta
+#  - name: bn
+#    metadata: data/delete/metadata.tsv 
+#    sequences: data/delete/sequences.fasta
+  - name: BN
+    metadata: data/2022.09.05/2022-09-05_BN.metadata.tsv
+    sequences: data/2022.09.05/2022-09-05_BN.fasta
+
+# Define frequencies parameters.
+frequencies:
+    recent_days_to_censor: 7
+
+
+# Here, you can specify what type of auspice_config you want to use
+# and what description you want. These will apply to all the above builds.
+# If you want to specify specific files for each build - you can!
+# See the 'example_advanced_customization' builds.yaml
+
+# Change "columns" to "location" for augur traits when having only a single country
+diagnostic:
+  skip_inputs_arg=_get_skipped_inputs_for_diagnostic: true
+  clock_filter: 20 # 20 default
+  snp_clusters: 1 # 1 default
+  contamination: 5 # 5 default
+
+
+traits:
+  default:
+    sampling_bias_correction: 2.5
+    columns: ["country"]
+
+# Change root to South African omicron / BEST
+refine:
+#  root: "SouthAfrica/NICD-N22102/2021"
+  root: "best"
+
+files:
+  auspice_config: "my_profiles/omicron/my_auspice_config.json"
+  description: "my_profiles/omicron/my_description.md"
+  colors: "my_profiles/omicron/colors_norwaydivisions.tsv"
+  sites_to_mask: "my_profiles/omicron/sites_ignored_for_tree_topology.txt"
+#  alignment_reference: "my_profiles/omicron/reference_seq.fa"
+#  include: "my_profiles/omicron/include.txt"
+#  emerging_lineages: "my_profiles/omicron/emerging_lineages.tsv"
+# lat_longs: "my_profiles/fhi/lat_longs.tsv"
