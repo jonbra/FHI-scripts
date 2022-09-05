@@ -21,7 +21,7 @@ metadata_filtered <- metadata_Gisaid %>%
   # Drop BA.1
   # filter(str_detect(`Pango lineage`, "BA.1.*", negate = TRUE))
   # Keep only BA.5
-  filter(str_detect(`Pango lineage`, "^BA.5.*"))
+  filter(str_detect(`Pango lineage`, "^BA.5.*") | str_detect(`Pango lineage`, "^BE.*"))
 
 # Clean up
 rm(metadata_Gisaid)
