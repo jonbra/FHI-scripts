@@ -25,6 +25,7 @@ metadata_filtered <- metadata_Gisaid %>%
 
 # Clean up
 rm(metadata_Gisaid)
+gc()
 
 # Match the names of the metadata with the fasta headers
 new_gr <- getSeq(fa, gr[which(gsub("\\|.*", "", names(gr)) %in% metadata_filtered$`Virus name`)])
