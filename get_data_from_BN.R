@@ -38,8 +38,8 @@ BN <- BN %>% mutate_all(list(~na_if(.,""))) %>%
 # Først lage en mapping mellom KEY og virus name
 SEQUENCEID_virus_mapping_FHI <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 only
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")) %>% 
+  # Keep BA.5 and BA.2.75.2
+  filter(str_detect(PANGOLIN_NOM, "^BA.2.75.2.*") | str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")) %>% 
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -67,8 +67,8 @@ SEQUENCEID_virus_mapping_FHI <- BN %>%
 
 SEQUENCEID_virus_mapping_MIK <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 only
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")) %>% 
+  # Keep BA.5 and BA.2.75.2
+  filter(str_detect(PANGOLIN_NOM, "^BA.2.75.2.*") | str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")) %>% 
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -91,8 +91,8 @@ SEQUENCEID_virus_mapping_MIK <- BN %>%
 
 SEQUENCEID_virus_mapping_Artic <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 only
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")) %>% 
+  # Keep BA.5 and BA.2.75.2
+  filter(str_detect(PANGOLIN_NOM, "^BA.2.75.2.*") | str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")) %>% 
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -117,8 +117,8 @@ SEQUENCEID_virus_mapping_Artic <- BN %>%
 
 SEQUENCEID_virus_mapping_Nano <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 only
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")) %>% 
+  # Keep BA.5 and BA.2.75.2
+  filter(str_detect(PANGOLIN_NOM, "^BA.2.75.2.*") | str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")) %>% 
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -405,8 +405,8 @@ SEQUENCEID_virus_mapping <- bind_rows(
 # First get the Eksterne metadata
 eksterne_meta <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 only
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")) %>% 
+  # Keep BA.5 and BA.2.75.2
+  filter(str_detect(PANGOLIN_NOM, "^BA.2.75.2.*") | str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")) %>% 
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
