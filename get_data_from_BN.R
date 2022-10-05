@@ -1,3 +1,10 @@
+# TODO:
+# Write all files to the HDD-disk. Run builds from there.
+# Take paths as argument to the RScript.
+# make wrapper to run everything.
+# Use same name for input files everytime.
+# Change date of final auspice file names in the wrapper script
+
 pacman::p_load(tidyverse, phylotools)
 
 # Create empty objects for the fasta sequences
