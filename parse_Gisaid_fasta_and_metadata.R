@@ -28,7 +28,9 @@ rm(metadata_Gisaid)
 gc()
 
 # Match the names of the metadata with the fasta headers
-new_gr <- getSeq(fa, gr[which(gsub("\\|.*", "", names(gr)) %in% metadata_filtered$`Virus name`)])
+# Using AAStringSet to account for possible presence of Non-DNA letters. 
+# The AAStringSet allows for all Letters
+new_gr <- getSeq(fa, gr[which(gsub("\\|.*", "", names(gr)) %in% metadata_filtered$`Virus name`)], as="AAStringSet")
 
 # Write files
 outfile <- paste0("/media/jonr/SATA6TB1/Gisaid/", Sys.Date(), "_Gisaid.fasta")
