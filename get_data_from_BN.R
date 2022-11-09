@@ -571,7 +571,8 @@ metadata_BN <- metadata_BN %>%
 # Merge with metadata_filtered from parse_large_fasta.R
 
 # Write files
-#if (identical(colnames(Gisaid_metadata), colnames(metadata_BN))) {
+# Create directory
+# dir.create(file.path(mainDir, subDir), showWarnings = FALSE)
   outfile_fasta <- paste0("/home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/", 
                           (format(Sys.Date(), "%Y.%m.%d")),
                           "/",
@@ -585,4 +586,3 @@ metadata_BN <- metadata_BN %>%
   
   dat2fasta(Total_fastas, outfile = outfile_fasta)
   write_tsv(metadata_BN, file = outfile_metadata)
-#}
