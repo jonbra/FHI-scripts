@@ -723,16 +723,8 @@ metadata_BN <- metadata_BN %>%
 # Write files
 # Create directory
 # dir.create(file.path(mainDir, subDir), showWarnings = FALSE)
-  outfile_fasta <- paste0("/home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/", 
-                          (format(Sys.Date(), "%Y.%m.%d")),
-                          "/",
-                          Sys.Date(),
-                          "_BN.fasta")
-  outfile_metadata <- paste0("/home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/", 
-                             (format(Sys.Date(), "%Y.%m.%d")),
-                             "/",
-                             Sys.Date(),
-                             "_BN.metadata.tsv")
+  outfile_fasta <- paste0("/home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/SC2_weekly/", "BN.fasta")
+  outfile_metadata <- paste0("/home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/SC2_weekly/", "BN.metadata.tsv")
   
   dat2fasta(Total_fastas, outfile = outfile_fasta)
   write_tsv(metadata_BN, file = outfile_metadata)
