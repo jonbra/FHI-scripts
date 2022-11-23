@@ -62,10 +62,10 @@ gc()
 new_gr <- getSeq(fa, gr[which(gsub("\\|.*", "", names(gr)) %in% metadata_filtered$`Virus name`)], as="AAStringSet")
 
 # Write files
-outfile <- paste0("/home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/SC2_weekly/", Sys.Date(), "_Gisaid.fasta")
+outfile <- paste0("/home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/SC2_weekly/", "Gisaid.fasta")
 # Write the fasta file
 writeXStringSet(new_gr, outfile, format = "fasta")
 # Write metadata
-write_tsv(metadata_filtered, paste0("/home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/SC2_weekly/", Sys.Date(), "_Gisaid.metadata.tsv"))
+write_tsv(metadata_filtered, paste0("/home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/SC2_weekly/", "Gisaid.metadata.tsv"))
 
 # Now, go to the script "get_data_from_BN.R" without removing any objects or variables from the environment
