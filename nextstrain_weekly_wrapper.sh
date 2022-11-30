@@ -49,4 +49,4 @@ nextstrain build . --configfile my_profiles/omicron/builds.yaml --cores all
 # Rename the final auspice files
 mv auspice/ncov_omicron_ba_five_tip-frequencies.json auspice/$3-ncov_omicron_ba_five_tip-frequencies.json
 mv auspice/ncov_omicron_ba_five.json auspice/$3-ncov_omicron_ba_five.json
-mv auspice/ncov_omicron_ba_five_root-sequence.json auspice/$3-ncov_omicron_ba_five_root-sequence.jso
+mv auspice/ncov_omicron_ba_five_root-sequence.json auspice/$3-ncov_omicron_ba_five_root-sequence.json
