@@ -2,7 +2,15 @@
 
 # Usage: sh nextstrain_weekly_wrapper.sh <gisaid-metadata.tar> <gisaid-fasta.tar> <today's date "2022.11.23">
 
+# Pull the latest scripts
+cd /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/
+git pull origin master
+
+# Move the latest build file into ncov. Remember to update the pango list on GitHub first
+mv builds.yaml /home/jonr/Prosjekter/Nextstrain_mamba/ncov/my_profiles/omicron/builds.yaml
+
 # Untar Gisaid files
+cd /media/jonr/SATA6TB1/Gisaid/
 tar -xf $1
 rm $1
 tar -xf $2
@@ -11,13 +19,6 @@ rm $2
 # Clean up old files
 rm /home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/SC2_weekly/*{tsv,fasta}
 
-# Pull the latest scripts
-cd /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/
-git pull origin master
-# Move the latest build file into ncov. Remember to update the pango list on GitHub first
-mv builds.yaml /home/jonr/Prosjekter/Nextstrain_mamba/ncov/my_profiles/omicron/builds.yaml
-
-cd /media/jonr/SATA6TB1/Gisaid/
 # Index the fasta file
 Rscript /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/index_fasta.R
 
