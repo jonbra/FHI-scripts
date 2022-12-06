@@ -24,8 +24,7 @@ metadata_filtered <- metadata_Gisaid %>%
   filter(str_detect(`Pango lineage`, "^BA.5.*") | 
          str_detect(`Pango lineage`, "^BE.*") | 
          str_detect(`Pango lineage`, "^BF.*") | 
-         str_detect(`Pango lineage`, "^BK.*") |
-         str_detect(`Pango lineage`, "^BF.*") | 
+         str_detect(`Pango lineage`, "^BK.*") | 
          str_detect(`Pango lineage`, "^BQ.*") | 
          str_detect(`Pango lineage`, "^BT.*") |
          str_detect(`Pango lineage`, "^BU.*") |
@@ -51,7 +50,9 @@ metadata_filtered <- metadata_Gisaid %>%
          str_detect(`Pango lineage`, "^DE.*") |
          str_detect(`Pango lineage`, "^DF.*") |
          str_detect(`Pango lineage`, "^DH.*") |
-         str_detect(`Pango lineage`, "^DJ.*"))
+         str_detect(`Pango lineage`, "^DJ.*") |
+         str_detect(`Pango lineage`, "^DK.*") |
+         str_detect(`Pango lineage`, "^DL.*"))
 
 # Clean up
 rm(metadata_Gisaid)
