@@ -17,6 +17,7 @@ git pull origin master
 # Move the latest build file into ncov. Remember to update the pango list on GitHub first
 mv builds.yaml /home/jonr/Prosjekter/Nextstrain_mamba/ncov/my_profiles/omicron/builds.yaml
 
+cd /media/jonr/SATA6TB1/Gisaid/
 # Index the fasta file
 Rscript /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/index_fasta.R
 
