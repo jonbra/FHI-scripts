@@ -28,3 +28,16 @@ pango_str <- pango %>%
 # This almost does it. Copy and paste and fix the ends manually  
 str_c("', '", pango_str, collapse = "")
 
+
+# Create list for entering into the R parsing scripts
+pango %>% 
+  # Get the BA.5's
+  filter(str_detect(Description, "B.1.1.529.5")) %>% 
+  # Drop BA.5
+  filter(str_detect(Lineage, "^BA.5", negate = TRUE)) %>% 
+  mutate(tmp = str_sub(Lineage, 1, 2)) %>% 
+  filter(str_detect(tmp, "\\*", negate = TRUE)) %>% 
+  select(tmp) %>% 
+  distinct() %>% 
+  arrange(tmp) %>% 
+  print(n = 200)
