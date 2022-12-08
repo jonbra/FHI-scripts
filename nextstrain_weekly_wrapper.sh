@@ -3,11 +3,11 @@
 # Usage: sh nextstrain_weekly_wrapper.sh <gisaid-metadata.tar> <gisaid-fasta.tar> <today's date "2022.11.23">
 
 # Pull the latest scripts
-cd /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/
+cd /media/jonr/SDD2TB/Nextstrain_mamba/FHI-scripts/
 git pull origin master
 
 # Move the latest build file into ncov. Remember to update the pango list on GitHub first
-mv builds.yaml /home/jonr/Prosjekter/Nextstrain_mamba/ncov/my_profiles/omicron/builds.yaml
+mv builds.yaml /media/jonr/SDD2TB/Nextstrain_mamba/ncov/my_profiles/omicron/builds.yaml
 
 # Untar Gisaid files
 cd /media/jonr/SATA6TB1/Gisaid/
@@ -17,16 +17,16 @@ tar -xf $2
 rm $2
 
 # Clean up old files
-rm /home/jonr/Prosjekter/Nextstrain_mamba/ncov/data/SC2_weekly/*{tsv,fasta}
+rm /media/jonr/SDD2TB/Nextstrain_mamba/ncov/data/SC2_weekly/*{tsv,fasta}
 
 # Index the fasta file
-Rscript /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/index_fasta.R
+Rscript /media/jonr/SDD2TB/Nextstrain_mamba/FHI-scripts/index_fasta.R
 
 # Parse the Gisaid files
-Rscript /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/parse_Gisaid_fasta_and_metadata.R
+Rscript /media/jonr/SDD2TB/Nextstrain_mamba/FHI-scripts/parse_Gisaid_fasta_and_metadata.R
 
 # Get data from BN
-Rscript /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/get_data_from_BN.R
+Rscript /media/jonr/SDD2TB/Nextstrain_mamba/FHI-scripts/get_data_from_BN.R
 
 # Update the Nextstrain conda environment
 mamba update -n base conda mamba
@@ -38,7 +38,7 @@ nextstrain update
 # conda deactivate
 
 # Pull the latest ncov Nextstrain updates from GitHub
-cd /home/jonr/Prosjekter/Nextstrain_mamba/ncov
+cd /media/jonr/SDD2TB/Nextstrain_mamba/ncov
 git pull origin master
 
 # Uodate the nextstrain cli
@@ -46,7 +46,7 @@ python3 -m pip install --upgrade nextstrain-cli
 
 # Start the build
 source activate nextstrain
-cd /home/jonr/Prosjekter/Nextstrain_mamba/ncov
+cd /media/jonr/SDD2TB/Nextstrain_mamba/ncov
 nextstrain build . --configfile my_profiles/omicron/builds.yaml --cores all
 # conda deactivate
 
