@@ -54,6 +54,7 @@ SEQUENCEID_virus_mapping_FHI <- BN %>%
          str_detect(PANGOLIN_NOM, "^BQ.*") | 
          str_detect(PANGOLIN_NOM, "^BT.*") |
          str_detect(PANGOLIN_NOM, "^BU.*") |
+         str_detect(PANGOLIN_NOM, "^BV.*") |
          str_detect(PANGOLIN_NOM, "^BW.*") |
          str_detect(PANGOLIN_NOM, "^BZ.*") | 
          str_detect(PANGOLIN_NOM, "^CC.*") |
@@ -70,15 +71,18 @@ SEQUENCEID_virus_mapping_FHI <- BN %>%
          str_detect(PANGOLIN_NOM, "^CT.*") |
          str_detect(PANGOLIN_NOM, "^CU.*") |
          str_detect(PANGOLIN_NOM, "^CW.*") |
+         str_detect(PANGOLIN_NOM, "^CY.*") |
          str_detect(PANGOLIN_NOM, "^CZ.*") |
          str_detect(PANGOLIN_NOM, "^DA.*") |
          str_detect(PANGOLIN_NOM, "^DB.*") |
          str_detect(PANGOLIN_NOM, "^DE.*") |
          str_detect(PANGOLIN_NOM, "^DF.*") |
+         str_detect(PANGOLIN_NOM, "^DG.*") |
          str_detect(PANGOLIN_NOM, "^DH.*") |
          str_detect(PANGOLIN_NOM, "^DJ.*") |
          str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DL.*") |
+         str_detect(PANGOLIN_NOM, "^DM.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -115,6 +119,7 @@ SEQUENCEID_virus_mapping_MIK <- BN %>%
          str_detect(PANGOLIN_NOM, "^BQ.*") | 
          str_detect(PANGOLIN_NOM, "^BT.*") |
          str_detect(PANGOLIN_NOM, "^BU.*") |
+         str_detect(PANGOLIN_NOM, "^BV.*") |
          str_detect(PANGOLIN_NOM, "^BW.*") |
          str_detect(PANGOLIN_NOM, "^BZ.*") | 
          str_detect(PANGOLIN_NOM, "^CC.*") |
@@ -131,15 +136,18 @@ SEQUENCEID_virus_mapping_MIK <- BN %>%
          str_detect(PANGOLIN_NOM, "^CT.*") |
          str_detect(PANGOLIN_NOM, "^CU.*") |
          str_detect(PANGOLIN_NOM, "^CW.*") |
+         str_detect(PANGOLIN_NOM, "^CY.*") |
          str_detect(PANGOLIN_NOM, "^CZ.*") |
          str_detect(PANGOLIN_NOM, "^DA.*") |
          str_detect(PANGOLIN_NOM, "^DB.*") |
          str_detect(PANGOLIN_NOM, "^DE.*") |
          str_detect(PANGOLIN_NOM, "^DF.*") |
+         str_detect(PANGOLIN_NOM, "^DG.*") |
          str_detect(PANGOLIN_NOM, "^DH.*") |
          str_detect(PANGOLIN_NOM, "^DJ.*") |
          str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DL.*") |
+         str_detect(PANGOLIN_NOM, "^DM.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -171,6 +179,7 @@ SEQUENCEID_virus_mapping_Artic <- BN %>%
          str_detect(PANGOLIN_NOM, "^BQ.*") | 
          str_detect(PANGOLIN_NOM, "^BT.*") |
          str_detect(PANGOLIN_NOM, "^BU.*") |
+         str_detect(PANGOLIN_NOM, "^BV.*") |
          str_detect(PANGOLIN_NOM, "^BW.*") |
          str_detect(PANGOLIN_NOM, "^BZ.*") | 
          str_detect(PANGOLIN_NOM, "^CC.*") |
@@ -187,15 +196,18 @@ SEQUENCEID_virus_mapping_Artic <- BN %>%
          str_detect(PANGOLIN_NOM, "^CT.*") |
          str_detect(PANGOLIN_NOM, "^CU.*") |
          str_detect(PANGOLIN_NOM, "^CW.*") |
+         str_detect(PANGOLIN_NOM, "^CY.*") |
          str_detect(PANGOLIN_NOM, "^CZ.*") |
          str_detect(PANGOLIN_NOM, "^DA.*") |
          str_detect(PANGOLIN_NOM, "^DB.*") |
          str_detect(PANGOLIN_NOM, "^DE.*") |
          str_detect(PANGOLIN_NOM, "^DF.*") |
+         str_detect(PANGOLIN_NOM, "^DG.*") |
          str_detect(PANGOLIN_NOM, "^DH.*") |
          str_detect(PANGOLIN_NOM, "^DJ.*") |
          str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DL.*") |
+         str_detect(PANGOLIN_NOM, "^DM.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -229,6 +241,7 @@ SEQUENCEID_virus_mapping_Nano <- BN %>%
          str_detect(PANGOLIN_NOM, "^BQ.*") | 
          str_detect(PANGOLIN_NOM, "^BT.*") |
          str_detect(PANGOLIN_NOM, "^BU.*") |
+         str_detect(PANGOLIN_NOM, "^BV.*") |
          str_detect(PANGOLIN_NOM, "^BW.*") |
          str_detect(PANGOLIN_NOM, "^BZ.*") | 
          str_detect(PANGOLIN_NOM, "^CC.*") |
@@ -245,15 +258,18 @@ SEQUENCEID_virus_mapping_Nano <- BN %>%
          str_detect(PANGOLIN_NOM, "^CT.*") |
          str_detect(PANGOLIN_NOM, "^CU.*") |
          str_detect(PANGOLIN_NOM, "^CW.*") |
+         str_detect(PANGOLIN_NOM, "^CY.*") |
          str_detect(PANGOLIN_NOM, "^CZ.*") |
          str_detect(PANGOLIN_NOM, "^DA.*") |
          str_detect(PANGOLIN_NOM, "^DB.*") |
          str_detect(PANGOLIN_NOM, "^DE.*") |
          str_detect(PANGOLIN_NOM, "^DF.*") |
+         str_detect(PANGOLIN_NOM, "^DG.*") |
          str_detect(PANGOLIN_NOM, "^DH.*") |
          str_detect(PANGOLIN_NOM, "^DJ.*") |
          str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DL.*") |
+         str_detect(PANGOLIN_NOM, "^DM.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -549,6 +565,7 @@ eksterne_meta <- BN %>%
          str_detect(PANGOLIN_NOM, "^BQ.*") | 
          str_detect(PANGOLIN_NOM, "^BT.*") |
          str_detect(PANGOLIN_NOM, "^BU.*") |
+         str_detect(PANGOLIN_NOM, "^BV.*") |
          str_detect(PANGOLIN_NOM, "^BW.*") |
          str_detect(PANGOLIN_NOM, "^BZ.*") | 
          str_detect(PANGOLIN_NOM, "^CC.*") |
@@ -565,15 +582,18 @@ eksterne_meta <- BN %>%
          str_detect(PANGOLIN_NOM, "^CT.*") |
          str_detect(PANGOLIN_NOM, "^CU.*") |
          str_detect(PANGOLIN_NOM, "^CW.*") |
+         str_detect(PANGOLIN_NOM, "^CY.*") |
          str_detect(PANGOLIN_NOM, "^CZ.*") |
          str_detect(PANGOLIN_NOM, "^DA.*") |
          str_detect(PANGOLIN_NOM, "^DB.*") |
          str_detect(PANGOLIN_NOM, "^DE.*") |
          str_detect(PANGOLIN_NOM, "^DF.*") |
+         str_detect(PANGOLIN_NOM, "^DG.*") |
          str_detect(PANGOLIN_NOM, "^DH.*") |
          str_detect(PANGOLIN_NOM, "^DJ.*") |
          str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DL.*") |
+         str_detect(PANGOLIN_NOM, "^DM.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
