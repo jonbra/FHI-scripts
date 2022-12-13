@@ -47,7 +47,7 @@ python3 -m pip install --upgrade nextstrain-cli
 # Start the build
 source activate nextstrain
 cd /media/jonr/SDD2TB/Nextstrain_mamba/ncov
-nextstrain build . --configfile my_profiles/omicron/builds.yaml --cores all
+nextstrain build . --configfile my_profiles/omicron/builds.yaml --cores all --forceall
 # conda deactivate
 
 # Rename the final auspice files
