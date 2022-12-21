@@ -71,7 +71,7 @@ subsampling:
     country:
       query: --query "(country == '{country}') & (pango_lineage.str.startswith('BQ.1'))"
     related:
-      group_by: "country2
+      group_by: "country"
       max_sequences: 1000
       sampling_scheme: "--probabilistic-sampling"
       query: --query "(country != '{country}') & (pango_lineage.str.startswith('BQ.1'))"
