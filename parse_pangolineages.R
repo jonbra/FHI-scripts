@@ -15,7 +15,7 @@ pango %>%
   # Get the abbreviations
   mutate(tmp = str_sub(Lineage, 1, 3)) %>% 
   distinct(tmp) %>% 
-  arrange(tmp) %>% print(n = 34)
+  arrange(tmp) %>% print(n = 1000)
 
 
 # Create list of BA.5 lineages for the Nextstrain build file
