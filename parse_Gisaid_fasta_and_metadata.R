@@ -56,7 +56,10 @@ metadata_filtered <- metadata_Gisaid %>%
          str_detect(`Pango lineage`, "^DJ.*") |
          str_detect(`Pango lineage`, "^DK.*") |
          str_detect(`Pango lineage`, "^DL.*") |
-         str_detect(`Pango lineage`, "^DM.*"))
+         str_detect(`Pango lineage`, "^DM.*") |
+         str_detect(`Pango lineage`, "^DN.*") |
+         str_detect(`Pango lineage`, "^DP.*") |
+         str_detect(`Pango lineage`, "^DQ.*"))
 
 # Clean up
 rm(metadata_Gisaid)
