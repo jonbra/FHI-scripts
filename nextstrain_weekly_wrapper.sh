@@ -54,3 +54,6 @@ nextstrain build . --configfile my_profiles/omicron/builds.yaml --cores all --fo
 mv auspice/ncov_omicron_ba_five_tip-frequencies.json auspice/$3-ncov_omicron_ba_five_tip-frequencies.json
 mv auspice/ncov_omicron_ba_five.json auspice/$3-ncov_omicron_ba_five.json
 mv auspice/ncov_omicron_ba_five_root-sequence.json auspice/$3-ncov_omicron_ba_five_root-sequence.json
+mv auspice/ncov_omicron_bq_tip-frequencies.json auspice/$3-ncov_omicron_bq_tip-frequencies.json
+mv auspice/ncov_omicron_bq.json auspice/$3-ncov_omicron_bq.json
+mv auspice/ncov_omicron_bq_root-sequence.json auspice/$3-ncov_omicron_bq_root-sequence.json
