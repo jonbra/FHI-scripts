@@ -87,7 +87,9 @@ SEQUENCEID_virus_mapping_FHI <- BN %>%
          str_detect(PANGOLIN_NOM, "^DP.*") |
          str_detect(PANGOLIN_NOM, "^DQ.*") |
          str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DT.*") |
+         str_detect(PANGOLIN_NOM, "^DU.*") |
+         str_detect(PANGOLIN_NOM, "^DW.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -157,8 +159,9 @@ SEQUENCEID_virus_mapping_MIK <- BN %>%
          str_detect(PANGOLIN_NOM, "^DP.*") |
          str_detect(PANGOLIN_NOM, "^DQ.*") |
          str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*")) %>%
-  # Keep omicron only
+         str_detect(PANGOLIN_NOM, "^DT.*") |
+         str_detect(PANGOLIN_NOM, "^DU.*") |
+         str_detect(PANGOLIN_NOM, "^DW.*")) %>%  # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
   #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>% 
@@ -222,8 +225,9 @@ SEQUENCEID_virus_mapping_Artic <- BN %>%
          str_detect(PANGOLIN_NOM, "^DP.*") |
          str_detect(PANGOLIN_NOM, "^DQ.*") |
          str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*")) %>%
-  # Keep omicron only
+         str_detect(PANGOLIN_NOM, "^DT.*") |
+         str_detect(PANGOLIN_NOM, "^DU.*") |
+         str_detect(PANGOLIN_NOM, "^DW.*")) %>%  # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
   #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>% 
@@ -249,7 +253,7 @@ SEQUENCEID_virus_mapping_Nano <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
   # Keep BA.5 
     # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
+   filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
          str_detect(PANGOLIN_NOM, "^BE.*") | 
          str_detect(PANGOLIN_NOM, "^BF.*") | 
          str_detect(PANGOLIN_NOM, "^BK.*") |
@@ -289,7 +293,9 @@ SEQUENCEID_virus_mapping_Nano <- BN %>%
          str_detect(PANGOLIN_NOM, "^DP.*") |
          str_detect(PANGOLIN_NOM, "^DQ.*") |
          str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DT.*") |
+         str_detect(PANGOLIN_NOM, "^DU.*") |
+         str_detect(PANGOLIN_NOM, "^DW.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -578,7 +584,7 @@ eksterne_meta <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
   # Keep BA.5
     # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
+   filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
          str_detect(PANGOLIN_NOM, "^BE.*") | 
          str_detect(PANGOLIN_NOM, "^BF.*") | 
          str_detect(PANGOLIN_NOM, "^BK.*") |
@@ -618,7 +624,9 @@ eksterne_meta <- BN %>%
          str_detect(PANGOLIN_NOM, "^DP.*") |
          str_detect(PANGOLIN_NOM, "^DQ.*") |
          str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DT.*") |
+         str_detect(PANGOLIN_NOM, "^DU.*") |
+         str_detect(PANGOLIN_NOM, "^DW.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
