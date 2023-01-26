@@ -28,27 +28,18 @@ Rscript /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/parse_Gisaid_fasta_an
 # Get data from BN
 Rscript /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/get_data_from_BN.R
 
-# Update the Nextstrain conda environment
-mamba update -n base conda mamba
+# Update Nextstrain and conda environment
+nextstrain update conda
 
-# Update Nextstrain
-source activate nextstrain
-mamba update --all
-nextstrain update
-# conda deactivate
+# Uodate the nextstrain cli
+python3 -m pip install --upgrade nextstrain-cli
 
 # Pull the latest ncov Nextstrain updates from GitHub
 cd /home/jonr/Prosjekter/Nextstrain_mamba/ncov
 git pull origin master
 
-# Uodate the nextstrain cli
-python3 -m pip install --upgrade nextstrain-cli
-
 # Start the build
-source activate nextstrain
-cd /home/jonr/Prosjekter/Nextstrain_mamba/ncov
 nextstrain build . --configfile my_profiles/omicron/builds.yaml --cores all --forceall
-# conda deactivate
 
 # Rename the final auspice files
 mv auspice/ncov_omicron_ba_five_tip-frequencies.json auspice/$3-ncov_omicron_ba_five_tip-frequencies.json
