@@ -89,7 +89,9 @@ SEQUENCEID_virus_mapping_FHI <- BN %>%
          str_detect(PANGOLIN_NOM, "^DR.*") |
          str_detect(PANGOLIN_NOM, "^DT.*") |
          str_detect(PANGOLIN_NOM, "^DU.*") |
-         str_detect(PANGOLIN_NOM, "^DW.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DW.*") |
+         str_detect(PANGOLIN_NOM, "^DY.*") |
+         str_detect(PANGOLIN_NOM, "^DZ.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -116,140 +118,6 @@ SEQUENCEID_virus_mapping_FHI <- BN %>%
   select(KEY, SEQUENCEID_SWIFT, covv_virus_name, SEKV_OPPSETT_SWIFT7)
 
 SEQUENCEID_virus_mapping_MIK <- BN %>%
-  filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 
-    # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
-         str_detect(PANGOLIN_NOM, "^BE.*") | 
-         str_detect(PANGOLIN_NOM, "^BF.*") | 
-         str_detect(PANGOLIN_NOM, "^BK.*") |
-         str_detect(PANGOLIN_NOM, "^BQ.*") | 
-         str_detect(PANGOLIN_NOM, "^BT.*") |
-         str_detect(PANGOLIN_NOM, "^BU.*") |
-         str_detect(PANGOLIN_NOM, "^BV.*") |
-         str_detect(PANGOLIN_NOM, "^BW.*") |
-         str_detect(PANGOLIN_NOM, "^BZ.*") | 
-         str_detect(PANGOLIN_NOM, "^CC.*") |
-         str_detect(PANGOLIN_NOM, "^CD.*") |
-         str_detect(PANGOLIN_NOM, "^CE.*") |
-         str_detect(PANGOLIN_NOM, "^CF.*") |
-         str_detect(PANGOLIN_NOM, "^CG.*") |
-         str_detect(PANGOLIN_NOM, "^CK.*") |
-         str_detect(PANGOLIN_NOM, "^CL.*") |
-         str_detect(PANGOLIN_NOM, "^CN.*") |
-         str_detect(PANGOLIN_NOM, "^CP.*") |
-         str_detect(PANGOLIN_NOM, "^CQ.*") |
-         str_detect(PANGOLIN_NOM, "^CR.*") |
-         str_detect(PANGOLIN_NOM, "^CT.*") |
-         str_detect(PANGOLIN_NOM, "^CU.*") |
-         str_detect(PANGOLIN_NOM, "^CW.*") |
-         str_detect(PANGOLIN_NOM, "^CY.*") |
-         str_detect(PANGOLIN_NOM, "^CZ.*") |
-         str_detect(PANGOLIN_NOM, "^DA.*") |
-         str_detect(PANGOLIN_NOM, "^DB.*") |
-         str_detect(PANGOLIN_NOM, "^DE.*") |
-         str_detect(PANGOLIN_NOM, "^DF.*") |
-         str_detect(PANGOLIN_NOM, "^DG.*") |
-         str_detect(PANGOLIN_NOM, "^DH.*") |
-         str_detect(PANGOLIN_NOM, "^DJ.*") |
-         str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*") |
-         str_detect(PANGOLIN_NOM, "^DM.*") |
-         str_detect(PANGOLIN_NOM, "^DN.*") |
-         str_detect(PANGOLIN_NOM, "^DP.*") |
-         str_detect(PANGOLIN_NOM, "^DQ.*") |
-         str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*") |
-         str_detect(PANGOLIN_NOM, "^DU.*") |
-         str_detect(PANGOLIN_NOM, "^DW.*")) %>%  # Keep omicron only
-  #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
-  # Drop BA.1
-  #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>% 
-  filter(is.na(GISAID_EPI_ISL)) %>% 
-  filter(str_detect(SEKV_OPPSETT_SWIFT7, "MIK")) %>% 
-  # Trenger også å lage Virus name
-  # Lage kolonne for "year"
-  separate(PROVE_TATT, into = c("Year", NA, NA), sep = "-", remove = FALSE) %>%
-  # Trekke ut sifrene fra 5 og til det siste fra BN KEY
-  mutate("Uniq_nr" = str_sub(KEY, start = 1, end = -1)) %>%
-  # Legge til kolonner med fast informasjon for å lage "Virus name" senere
-  add_column("Separator" = "/",
-             "GISAID_prefix" = "hCoV-19/",
-             "Country" = "Norway/",
-             "Continent" = "Europe/") %>%
-  # Make "Virus name" column
-  unite("covv_virus_name", c(GISAID_prefix, Country, Uniq_nr, Separator, Year), sep = "", remove = FALSE) %>%
-  select(SEQUENCEID_SWIFT, KEY, covv_virus_name, SEKV_OPPSETT_SWIFT7)
-
-SEQUENCEID_virus_mapping_Artic <- BN %>%
-  filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 
-    # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
-         str_detect(PANGOLIN_NOM, "^BE.*") | 
-         str_detect(PANGOLIN_NOM, "^BF.*") | 
-         str_detect(PANGOLIN_NOM, "^BK.*") |
-         str_detect(PANGOLIN_NOM, "^BQ.*") | 
-         str_detect(PANGOLIN_NOM, "^BT.*") |
-         str_detect(PANGOLIN_NOM, "^BU.*") |
-         str_detect(PANGOLIN_NOM, "^BV.*") |
-         str_detect(PANGOLIN_NOM, "^BW.*") |
-         str_detect(PANGOLIN_NOM, "^BZ.*") | 
-         str_detect(PANGOLIN_NOM, "^CC.*") |
-         str_detect(PANGOLIN_NOM, "^CD.*") |
-         str_detect(PANGOLIN_NOM, "^CE.*") |
-         str_detect(PANGOLIN_NOM, "^CF.*") |
-         str_detect(PANGOLIN_NOM, "^CG.*") |
-         str_detect(PANGOLIN_NOM, "^CK.*") |
-         str_detect(PANGOLIN_NOM, "^CL.*") |
-         str_detect(PANGOLIN_NOM, "^CN.*") |
-         str_detect(PANGOLIN_NOM, "^CP.*") |
-         str_detect(PANGOLIN_NOM, "^CQ.*") |
-         str_detect(PANGOLIN_NOM, "^CR.*") |
-         str_detect(PANGOLIN_NOM, "^CT.*") |
-         str_detect(PANGOLIN_NOM, "^CU.*") |
-         str_detect(PANGOLIN_NOM, "^CW.*") |
-         str_detect(PANGOLIN_NOM, "^CY.*") |
-         str_detect(PANGOLIN_NOM, "^CZ.*") |
-         str_detect(PANGOLIN_NOM, "^DA.*") |
-         str_detect(PANGOLIN_NOM, "^DB.*") |
-         str_detect(PANGOLIN_NOM, "^DE.*") |
-         str_detect(PANGOLIN_NOM, "^DF.*") |
-         str_detect(PANGOLIN_NOM, "^DG.*") |
-         str_detect(PANGOLIN_NOM, "^DH.*") |
-         str_detect(PANGOLIN_NOM, "^DJ.*") |
-         str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*") |
-         str_detect(PANGOLIN_NOM, "^DM.*") |
-         str_detect(PANGOLIN_NOM, "^DN.*") |
-         str_detect(PANGOLIN_NOM, "^DP.*") |
-         str_detect(PANGOLIN_NOM, "^DQ.*") |
-         str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*") |
-         str_detect(PANGOLIN_NOM, "^DU.*") |
-         str_detect(PANGOLIN_NOM, "^DW.*")) %>%  # Keep omicron only
-  #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
-  # Drop BA.1
-  #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>% 
-  filter(is.na(GISAID_EPI_ISL)) %>% 
-  filter(str_detect(RES_CDC_INFB_CT, "Artic")) %>%
-  # Trenger også å lage Virus name
-  # Lage kolonne for "year"
-  separate(PROVE_TATT, into = c("Year", NA, NA), sep = "-", remove = FALSE) %>%
-  # Trekke ut sifrene fra 5 og til det siste fra BN KEY
-  mutate("Uniq_nr" = str_sub(KEY, start = 5, end = -1)) %>%
-  # Fjerne ledende nuller fra stammenavnet
-  mutate("Uniq_nr" = str_remove(Uniq_nr, "^0+")) %>%
-  # Legge til kolonner med fast informasjon for å lage "Virus name" senere
-  add_column("Separator" = "/",
-             "GISAID_prefix" = "hCoV-19/",
-             "Country" = "Norway/",
-             "Continent" = "Europe/") %>%
-  # Make "Virus name" column
-  unite("covv_virus_name", c(GISAID_prefix, Country, Uniq_nr, Separator, Year), sep = "", remove = FALSE) %>%
-  select(KEY, RES_CDC_INFB_CT, covv_virus_name, SAMPLE_CATEGORY)
-
-SEQUENCEID_virus_mapping_Nano <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
   # Keep BA.5 
     # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
@@ -295,7 +163,149 @@ SEQUENCEID_virus_mapping_Nano <- BN %>%
          str_detect(PANGOLIN_NOM, "^DR.*") |
          str_detect(PANGOLIN_NOM, "^DT.*") |
          str_detect(PANGOLIN_NOM, "^DU.*") |
-         str_detect(PANGOLIN_NOM, "^DW.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DW.*") |
+         str_detect(PANGOLIN_NOM, "^DY.*") |
+         str_detect(PANGOLIN_NOM, "^DZ.*")) %>%
+  # Keep omicron only
+  #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
+  # Drop BA.1
+  #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>% 
+  filter(is.na(GISAID_EPI_ISL)) %>% 
+  filter(str_detect(SEKV_OPPSETT_SWIFT7, "MIK")) %>% 
+  # Trenger også å lage Virus name
+  # Lage kolonne for "year"
+  separate(PROVE_TATT, into = c("Year", NA, NA), sep = "-", remove = FALSE) %>%
+  # Trekke ut sifrene fra 5 og til det siste fra BN KEY
+  mutate("Uniq_nr" = str_sub(KEY, start = 1, end = -1)) %>%
+  # Legge til kolonner med fast informasjon for å lage "Virus name" senere
+  add_column("Separator" = "/",
+             "GISAID_prefix" = "hCoV-19/",
+             "Country" = "Norway/",
+             "Continent" = "Europe/") %>%
+  # Make "Virus name" column
+  unite("covv_virus_name", c(GISAID_prefix, Country, Uniq_nr, Separator, Year), sep = "", remove = FALSE) %>%
+  select(SEQUENCEID_SWIFT, KEY, covv_virus_name, SEKV_OPPSETT_SWIFT7)
+
+SEQUENCEID_virus_mapping_Artic <- BN %>%
+  filter(PROVE_TATT >= "2022-01-01") %>% 
+  # Keep BA.5 
+    # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
+   filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
+         str_detect(PANGOLIN_NOM, "^BE.*") | 
+         str_detect(PANGOLIN_NOM, "^BF.*") | 
+         str_detect(PANGOLIN_NOM, "^BK.*") |
+         str_detect(PANGOLIN_NOM, "^BQ.*") | 
+         str_detect(PANGOLIN_NOM, "^BT.*") |
+         str_detect(PANGOLIN_NOM, "^BU.*") |
+         str_detect(PANGOLIN_NOM, "^BV.*") |
+         str_detect(PANGOLIN_NOM, "^BW.*") |
+         str_detect(PANGOLIN_NOM, "^BZ.*") | 
+         str_detect(PANGOLIN_NOM, "^CC.*") |
+         str_detect(PANGOLIN_NOM, "^CD.*") |
+         str_detect(PANGOLIN_NOM, "^CE.*") |
+         str_detect(PANGOLIN_NOM, "^CF.*") |
+         str_detect(PANGOLIN_NOM, "^CG.*") |
+         str_detect(PANGOLIN_NOM, "^CK.*") |
+         str_detect(PANGOLIN_NOM, "^CL.*") |
+         str_detect(PANGOLIN_NOM, "^CN.*") |
+         str_detect(PANGOLIN_NOM, "^CP.*") |
+         str_detect(PANGOLIN_NOM, "^CQ.*") |
+         str_detect(PANGOLIN_NOM, "^CR.*") |
+         str_detect(PANGOLIN_NOM, "^CT.*") |
+         str_detect(PANGOLIN_NOM, "^CU.*") |
+         str_detect(PANGOLIN_NOM, "^CW.*") |
+         str_detect(PANGOLIN_NOM, "^CY.*") |
+         str_detect(PANGOLIN_NOM, "^CZ.*") |
+         str_detect(PANGOLIN_NOM, "^DA.*") |
+         str_detect(PANGOLIN_NOM, "^DB.*") |
+         str_detect(PANGOLIN_NOM, "^DE.*") |
+         str_detect(PANGOLIN_NOM, "^DF.*") |
+         str_detect(PANGOLIN_NOM, "^DG.*") |
+         str_detect(PANGOLIN_NOM, "^DH.*") |
+         str_detect(PANGOLIN_NOM, "^DJ.*") |
+         str_detect(PANGOLIN_NOM, "^DK.*") |
+         str_detect(PANGOLIN_NOM, "^DL.*") |
+         str_detect(PANGOLIN_NOM, "^DM.*") |
+         str_detect(PANGOLIN_NOM, "^DN.*") |
+         str_detect(PANGOLIN_NOM, "^DP.*") |
+         str_detect(PANGOLIN_NOM, "^DQ.*") |
+         str_detect(PANGOLIN_NOM, "^DR.*") |
+         str_detect(PANGOLIN_NOM, "^DT.*") |
+         str_detect(PANGOLIN_NOM, "^DU.*") |
+         str_detect(PANGOLIN_NOM, "^DW.*") |
+         str_detect(PANGOLIN_NOM, "^DY.*") |
+         str_detect(PANGOLIN_NOM, "^DZ.*")) %>%
+# Keep omicron only
+  #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
+  # Drop BA.1
+  #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>% 
+  filter(is.na(GISAID_EPI_ISL)) %>% 
+  filter(str_detect(RES_CDC_INFB_CT, "Artic")) %>%
+  # Trenger også å lage Virus name
+  # Lage kolonne for "year"
+  separate(PROVE_TATT, into = c("Year", NA, NA), sep = "-", remove = FALSE) %>%
+  # Trekke ut sifrene fra 5 og til det siste fra BN KEY
+  mutate("Uniq_nr" = str_sub(KEY, start = 5, end = -1)) %>%
+  # Fjerne ledende nuller fra stammenavnet
+  mutate("Uniq_nr" = str_remove(Uniq_nr, "^0+")) %>%
+  # Legge til kolonner med fast informasjon for å lage "Virus name" senere
+  add_column("Separator" = "/",
+             "GISAID_prefix" = "hCoV-19/",
+             "Country" = "Norway/",
+             "Continent" = "Europe/") %>%
+  # Make "Virus name" column
+  unite("covv_virus_name", c(GISAID_prefix, Country, Uniq_nr, Separator, Year), sep = "", remove = FALSE) %>%
+  select(KEY, RES_CDC_INFB_CT, covv_virus_name, SAMPLE_CATEGORY)
+
+SEQUENCEID_virus_mapping_Nano <- BN %>%
+  filter(PROVE_TATT >= "2022-01-01") %>% 
+  # Keep BA.5 
+    # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
+    filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
+         str_detect(PANGOLIN_NOM, "^BE.*") | 
+         str_detect(PANGOLIN_NOM, "^BF.*") | 
+         str_detect(PANGOLIN_NOM, "^BK.*") |
+         str_detect(PANGOLIN_NOM, "^BQ.*") | 
+         str_detect(PANGOLIN_NOM, "^BT.*") |
+         str_detect(PANGOLIN_NOM, "^BU.*") |
+         str_detect(PANGOLIN_NOM, "^BV.*") |
+         str_detect(PANGOLIN_NOM, "^BW.*") |
+         str_detect(PANGOLIN_NOM, "^BZ.*") | 
+         str_detect(PANGOLIN_NOM, "^CC.*") |
+         str_detect(PANGOLIN_NOM, "^CD.*") |
+         str_detect(PANGOLIN_NOM, "^CE.*") |
+         str_detect(PANGOLIN_NOM, "^CF.*") |
+         str_detect(PANGOLIN_NOM, "^CG.*") |
+         str_detect(PANGOLIN_NOM, "^CK.*") |
+         str_detect(PANGOLIN_NOM, "^CL.*") |
+         str_detect(PANGOLIN_NOM, "^CN.*") |
+         str_detect(PANGOLIN_NOM, "^CP.*") |
+         str_detect(PANGOLIN_NOM, "^CQ.*") |
+         str_detect(PANGOLIN_NOM, "^CR.*") |
+         str_detect(PANGOLIN_NOM, "^CT.*") |
+         str_detect(PANGOLIN_NOM, "^CU.*") |
+         str_detect(PANGOLIN_NOM, "^CW.*") |
+         str_detect(PANGOLIN_NOM, "^CY.*") |
+         str_detect(PANGOLIN_NOM, "^CZ.*") |
+         str_detect(PANGOLIN_NOM, "^DA.*") |
+         str_detect(PANGOLIN_NOM, "^DB.*") |
+         str_detect(PANGOLIN_NOM, "^DE.*") |
+         str_detect(PANGOLIN_NOM, "^DF.*") |
+         str_detect(PANGOLIN_NOM, "^DG.*") |
+         str_detect(PANGOLIN_NOM, "^DH.*") |
+         str_detect(PANGOLIN_NOM, "^DJ.*") |
+         str_detect(PANGOLIN_NOM, "^DK.*") |
+         str_detect(PANGOLIN_NOM, "^DL.*") |
+         str_detect(PANGOLIN_NOM, "^DM.*") |
+         str_detect(PANGOLIN_NOM, "^DN.*") |
+         str_detect(PANGOLIN_NOM, "^DP.*") |
+         str_detect(PANGOLIN_NOM, "^DQ.*") |
+         str_detect(PANGOLIN_NOM, "^DR.*") |
+         str_detect(PANGOLIN_NOM, "^DT.*") |
+         str_detect(PANGOLIN_NOM, "^DU.*") |
+         str_detect(PANGOLIN_NOM, "^DW.*") |
+         str_detect(PANGOLIN_NOM, "^DY.*") |
+         str_detect(PANGOLIN_NOM, "^DZ.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
@@ -626,7 +636,9 @@ eksterne_meta <- BN %>%
          str_detect(PANGOLIN_NOM, "^DR.*") |
          str_detect(PANGOLIN_NOM, "^DT.*") |
          str_detect(PANGOLIN_NOM, "^DU.*") |
-         str_detect(PANGOLIN_NOM, "^DW.*")) %>%
+         str_detect(PANGOLIN_NOM, "^DW.*") |
+         str_detect(PANGOLIN_NOM, "^DY.*") |
+         str_detect(PANGOLIN_NOM, "^DZ.*")) %>%
   # Keep omicron only
   #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
   # Drop BA.1
