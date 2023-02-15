@@ -71,7 +71,27 @@ metadata_filtered <- metadata_Gisaid %>%
          str_detect(`Pango lineage`, "^EB.*") |
          str_detect(`Pango lineage`, "^ED.*") |
          str_detect(`Pango lineage`, "^EE.*") |
-         str_detect(`Pango lineage`, "^EF.*"))
+         str_detect(`Pango lineage`, "^EF.*") |
+         str_detect(`Pango lineage`, "^BA.2*") |
+         str_detect(`Pango lineage`, "^BG.*") |
+         str_detect(`Pango lineage`, "^BH.*") |
+         str_detect(`Pango lineage`, "^BJ.*") |
+         str_detect(`Pango lineage`, "^BL.*") |
+         str_detect(`Pango lineage`, "^BM.*") |
+         str_detect(`Pango lineage`, "^BN.*") |
+         str_detect(`Pango lineage`, "^BP.*") |
+         str_detect(`Pango lineage`, "^BR.*") |
+         str_detect(`Pango lineage`, "^BS.*") |
+         str_detect(`Pango lineage`, "^BY.*") |
+         str_detect(`Pango lineage`, "^CA.*") |
+         str_detect(`Pango lineage`, "^CB.*") |
+         str_detect(`Pango lineage`, "^CH.*") |
+         str_detect(`Pango lineage`, "^CJ.*") |
+         str_detect(`Pango lineage`, "^CM.*") |
+         str_detect(`Pango lineage`, "^CV.*") |
+         str_detect(`Pango lineage`, "^DD.*") |
+         str_detect(`Pango lineage`, "^DS.*") |
+         str_detect(`Pango lineage`, "^DV.*"))
 
 # Clean up
 rm(metadata_Gisaid)
