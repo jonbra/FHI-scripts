@@ -1,31 +1,24 @@
 library(tidyverse)
 
-# Create list of BA.5 abbreviations for parsing in R ----------------------
-
-
 # Read lineage descriptions from GitHub
 pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
 
-# Create list of BA.5 lineages for the Nextstrain build file
+# Create list of BA.5 and BA.2 lineages for the Nextstrain build file
 pango_str <- pango %>% 
   # Get the BA.5's
-  filter(str_detect(Description, "B.1.1.529.5")) %>% 
+  filter(str_detect(Description, "B.1.1.529.5") | str_detect(Description, "B.1.1.529.2")) %>% 
+  # Remove some withdrawn lineages
   filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
+  # Pull all the aliases into a character vector
   pull(Lineage)
 
-# This almost does it. Copy and paste and fix the ends manually  
-str_c("', '", pango_str, collapse = "")
-
-
-# Create list for entering into the R parsing scripts
-pango %>% 
-  # Get the BA.5's
-  filter(str_detect(Description, "B.1.1.529.5")) %>% 
-  # Drop BA.5
-  filter(str_detect(Lineage, "^BA.5", negate = TRUE)) %>% 
-  mutate(tmp = str_sub(Lineage, 1, 2)) %>% 
-  filter(str_detect(tmp, "\\*", negate = TRUE)) %>% 
-  select(tmp) %>% 
-  distinct() %>% 
-  arrange(tmp) %>% 
-  print(n = 200)
+# Create a list of queries to add to the builds.yaml file
+# NB: The list needs to be enclosed by double quotes ("").
+# These are actually not there now, but when the vector is printed they are shown,
+# and copied when I copy and paste
+tmp <- str_flatten(pango_str, collapse = "', '")
+# Insert "[' in the beginning
+tmp <- str_c('[\'', tmp)
+# Insert ']" at the end
+tmp <- str_c(tmp, '\']')
+print(tmp)
