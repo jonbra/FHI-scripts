@@ -1,11 +1,15 @@
-# TODO:
-# Write all files to the HDD-disk. Run builds from there.
-# Take paths as argument to the RScript.
-# make wrapper to run everything.
-# Use same name for input files everytime.
-# Change date of final auspice file names in the wrapper script
-
 pacman::p_load(tidyverse, phylotools)
+
+# Read lineage descriptions from GitHub
+pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
+
+# Create list of BA.5 and BA.2.75 lineages for the Nextstrain build file
+pango_str <- pango %>% 
+  filter(str_detect(Description, "B.1.1.529.5") | str_detect(Description, "B.1.1.529.2.75")) %>% 
+  # Remove some withdrawn lineages
+  filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
+  # Pull all the aliases into a character vector
+  pull(Lineage)
 
 # Create empty objects for the fasta sequences
 FHI_fastas <- tibble(
@@ -45,83 +49,9 @@ BN <- BN %>% mutate_all(list(~na_if(.,""))) %>%
 # Først lage en mapping mellom KEY og virus name
 SEQUENCEID_virus_mapping_FHI <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5
-  # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
-         str_detect(PANGOLIN_NOM, "^BE.*") | 
-         str_detect(PANGOLIN_NOM, "^BF.*") | 
-         str_detect(PANGOLIN_NOM, "^BK.*") |
-         str_detect(PANGOLIN_NOM, "^BQ.*") | 
-         str_detect(PANGOLIN_NOM, "^BT.*") |
-         str_detect(PANGOLIN_NOM, "^BU.*") |
-         str_detect(PANGOLIN_NOM, "^BV.*") |
-         str_detect(PANGOLIN_NOM, "^BW.*") |
-         str_detect(PANGOLIN_NOM, "^BZ.*") | 
-         str_detect(PANGOLIN_NOM, "^CC.*") |
-         str_detect(PANGOLIN_NOM, "^CD.*") |
-         str_detect(PANGOLIN_NOM, "^CE.*") |
-         str_detect(PANGOLIN_NOM, "^CF.*") |
-         str_detect(PANGOLIN_NOM, "^CG.*") |
-         str_detect(PANGOLIN_NOM, "^CK.*") |
-         str_detect(PANGOLIN_NOM, "^CL.*") |
-         str_detect(PANGOLIN_NOM, "^CN.*") |
-         str_detect(PANGOLIN_NOM, "^CP.*") |
-         str_detect(PANGOLIN_NOM, "^CQ.*") |
-         str_detect(PANGOLIN_NOM, "^CR.*") |
-         str_detect(PANGOLIN_NOM, "^CT.*") |
-         str_detect(PANGOLIN_NOM, "^CU.*") |
-         str_detect(PANGOLIN_NOM, "^CW.*") |
-         str_detect(PANGOLIN_NOM, "^CY.*") |
-         str_detect(PANGOLIN_NOM, "^CZ.*") |
-         str_detect(PANGOLIN_NOM, "^DA.*") |
-         str_detect(PANGOLIN_NOM, "^DB.*") |
-         str_detect(PANGOLIN_NOM, "^DE.*") |
-         str_detect(PANGOLIN_NOM, "^DF.*") |
-         str_detect(PANGOLIN_NOM, "^DG.*") |
-         str_detect(PANGOLIN_NOM, "^DH.*") |
-         str_detect(PANGOLIN_NOM, "^DJ.*") |
-         str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*") |
-         str_detect(PANGOLIN_NOM, "^DM.*") |
-         str_detect(PANGOLIN_NOM, "^DN.*") |
-         str_detect(PANGOLIN_NOM, "^DP.*") |
-         str_detect(PANGOLIN_NOM, "^DQ.*") |
-         str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*") |
-         str_detect(PANGOLIN_NOM, "^DU.*") |
-         str_detect(PANGOLIN_NOM, "^DW.*") |
-         str_detect(PANGOLIN_NOM, "^DY.*") |
-         str_detect(PANGOLIN_NOM, "^DZ.*") |
-         str_detect(PANGOLIN_NOM, "^EA.*") |
-         str_detect(PANGOLIN_NOM, "^EB.*") |
-         str_detect(PANGOLIN_NOM, "^EC.*") |
-         str_detect(PANGOLIN_NOM, "^ED.*") |
-         str_detect(PANGOLIN_NOM, "^EE.*") |
-         str_detect(PANGOLIN_NOM, "^EF.*") |
-         str_detect(PANGOLIN_NOM, "^BA.2*") |
-         str_detect(PANGOLIN_NOM, "^BG.*") |
-         str_detect(PANGOLIN_NOM, "^BH.*") |
-         str_detect(PANGOLIN_NOM, "^BJ.*") |
-         str_detect(PANGOLIN_NOM, "^BL.*") |
-         str_detect(PANGOLIN_NOM, "^BM.*") |
-         str_detect(PANGOLIN_NOM, "^BN.*") |
-         str_detect(PANGOLIN_NOM, "^BP.*") |
-         str_detect(PANGOLIN_NOM, "^BR.*") |
-         str_detect(PANGOLIN_NOM, "^BS.*") |
-         str_detect(PANGOLIN_NOM, "^BY.*") |
-         str_detect(PANGOLIN_NOM, "^CA.*") |
-         str_detect(PANGOLIN_NOM, "^CB.*") |
-         str_detect(PANGOLIN_NOM, "^CH.*") |
-         str_detect(PANGOLIN_NOM, "^CJ.*") |
-         str_detect(PANGOLIN_NOM, "^CM.*") |
-         str_detect(PANGOLIN_NOM, "^CV.*") |
-         str_detect(PANGOLIN_NOM, "^DD.*") |
-         str_detect(PANGOLIN_NOM, "^DS.*") |
-         str_detect(PANGOLIN_NOM, "^DV.*")) %>%
-  # Keep omicron only
-  #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
-  # Drop BA.1
-  #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>% 
+  # Keep BA.5 and BA.2.75
+  filter(PANGOLIN_NOM %in% pango_str) %>% 
+  # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(SEKV_OPPSETT_SWIFT7, "FHI")) %>% 
   # Trenger også å lage Virus name
@@ -145,83 +75,9 @@ SEQUENCEID_virus_mapping_FHI <- BN %>%
 
 SEQUENCEID_virus_mapping_MIK <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 
-    # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
-         str_detect(PANGOLIN_NOM, "^BE.*") | 
-         str_detect(PANGOLIN_NOM, "^BF.*") | 
-         str_detect(PANGOLIN_NOM, "^BK.*") |
-         str_detect(PANGOLIN_NOM, "^BQ.*") | 
-         str_detect(PANGOLIN_NOM, "^BT.*") |
-         str_detect(PANGOLIN_NOM, "^BU.*") |
-         str_detect(PANGOLIN_NOM, "^BV.*") |
-         str_detect(PANGOLIN_NOM, "^BW.*") |
-         str_detect(PANGOLIN_NOM, "^BZ.*") | 
-         str_detect(PANGOLIN_NOM, "^CC.*") |
-         str_detect(PANGOLIN_NOM, "^CD.*") |
-         str_detect(PANGOLIN_NOM, "^CE.*") |
-         str_detect(PANGOLIN_NOM, "^CF.*") |
-         str_detect(PANGOLIN_NOM, "^CG.*") |
-         str_detect(PANGOLIN_NOM, "^CK.*") |
-         str_detect(PANGOLIN_NOM, "^CL.*") |
-         str_detect(PANGOLIN_NOM, "^CN.*") |
-         str_detect(PANGOLIN_NOM, "^CP.*") |
-         str_detect(PANGOLIN_NOM, "^CQ.*") |
-         str_detect(PANGOLIN_NOM, "^CR.*") |
-         str_detect(PANGOLIN_NOM, "^CT.*") |
-         str_detect(PANGOLIN_NOM, "^CU.*") |
-         str_detect(PANGOLIN_NOM, "^CW.*") |
-         str_detect(PANGOLIN_NOM, "^CY.*") |
-         str_detect(PANGOLIN_NOM, "^CZ.*") |
-         str_detect(PANGOLIN_NOM, "^DA.*") |
-         str_detect(PANGOLIN_NOM, "^DB.*") |
-         str_detect(PANGOLIN_NOM, "^DE.*") |
-         str_detect(PANGOLIN_NOM, "^DF.*") |
-         str_detect(PANGOLIN_NOM, "^DG.*") |
-         str_detect(PANGOLIN_NOM, "^DH.*") |
-         str_detect(PANGOLIN_NOM, "^DJ.*") |
-         str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*") |
-         str_detect(PANGOLIN_NOM, "^DM.*") |
-         str_detect(PANGOLIN_NOM, "^DN.*") |
-         str_detect(PANGOLIN_NOM, "^DP.*") |
-         str_detect(PANGOLIN_NOM, "^DQ.*") |
-         str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*") |
-         str_detect(PANGOLIN_NOM, "^DU.*") |
-         str_detect(PANGOLIN_NOM, "^DW.*") |
-         str_detect(PANGOLIN_NOM, "^DY.*") |
-         str_detect(PANGOLIN_NOM, "^DZ.*") |
-         str_detect(PANGOLIN_NOM, "^EA.*") |
-         str_detect(PANGOLIN_NOM, "^EB.*") |
-         str_detect(PANGOLIN_NOM, "^EC.*") |
-         str_detect(PANGOLIN_NOM, "^ED.*") |
-         str_detect(PANGOLIN_NOM, "^EE.*") |
-         str_detect(PANGOLIN_NOM, "^EF.*") |
-         str_detect(PANGOLIN_NOM, "^BA.2*") |
-         str_detect(PANGOLIN_NOM, "^BG.*") |
-         str_detect(PANGOLIN_NOM, "^BH.*") |
-         str_detect(PANGOLIN_NOM, "^BJ.*") |
-         str_detect(PANGOLIN_NOM, "^BL.*") |
-         str_detect(PANGOLIN_NOM, "^BM.*") |
-         str_detect(PANGOLIN_NOM, "^BN.*") |
-         str_detect(PANGOLIN_NOM, "^BP.*") |
-         str_detect(PANGOLIN_NOM, "^BR.*") |
-         str_detect(PANGOLIN_NOM, "^BS.*") |
-         str_detect(PANGOLIN_NOM, "^BY.*") |
-         str_detect(PANGOLIN_NOM, "^CA.*") |
-         str_detect(PANGOLIN_NOM, "^CB.*") |
-         str_detect(PANGOLIN_NOM, "^CH.*") |
-         str_detect(PANGOLIN_NOM, "^CJ.*") |
-         str_detect(PANGOLIN_NOM, "^CM.*") |
-         str_detect(PANGOLIN_NOM, "^CV.*") |
-         str_detect(PANGOLIN_NOM, "^DD.*") |
-         str_detect(PANGOLIN_NOM, "^DS.*") |
-         str_detect(PANGOLIN_NOM, "^DV.*")) %>%
-  # Keep omicron only
-  #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
-  # Drop BA.1
-  #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>% 
+  # Keep BA.5 and BA.2.75
+  filter(PANGOLIN_NOM %in% pango_str) %>% 
+  # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(SEKV_OPPSETT_SWIFT7, "MIK")) %>% 
   # Trenger også å lage Virus name
@@ -240,83 +96,9 @@ SEQUENCEID_virus_mapping_MIK <- BN %>%
 
 SEQUENCEID_virus_mapping_Artic <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 
-    # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
-         str_detect(PANGOLIN_NOM, "^BE.*") | 
-         str_detect(PANGOLIN_NOM, "^BF.*") | 
-         str_detect(PANGOLIN_NOM, "^BK.*") |
-         str_detect(PANGOLIN_NOM, "^BQ.*") | 
-         str_detect(PANGOLIN_NOM, "^BT.*") |
-         str_detect(PANGOLIN_NOM, "^BU.*") |
-         str_detect(PANGOLIN_NOM, "^BV.*") |
-         str_detect(PANGOLIN_NOM, "^BW.*") |
-         str_detect(PANGOLIN_NOM, "^BZ.*") | 
-         str_detect(PANGOLIN_NOM, "^CC.*") |
-         str_detect(PANGOLIN_NOM, "^CD.*") |
-         str_detect(PANGOLIN_NOM, "^CE.*") |
-         str_detect(PANGOLIN_NOM, "^CF.*") |
-         str_detect(PANGOLIN_NOM, "^CG.*") |
-         str_detect(PANGOLIN_NOM, "^CK.*") |
-         str_detect(PANGOLIN_NOM, "^CL.*") |
-         str_detect(PANGOLIN_NOM, "^CN.*") |
-         str_detect(PANGOLIN_NOM, "^CP.*") |
-         str_detect(PANGOLIN_NOM, "^CQ.*") |
-         str_detect(PANGOLIN_NOM, "^CR.*") |
-         str_detect(PANGOLIN_NOM, "^CT.*") |
-         str_detect(PANGOLIN_NOM, "^CU.*") |
-         str_detect(PANGOLIN_NOM, "^CW.*") |
-         str_detect(PANGOLIN_NOM, "^CY.*") |
-         str_detect(PANGOLIN_NOM, "^CZ.*") |
-         str_detect(PANGOLIN_NOM, "^DA.*") |
-         str_detect(PANGOLIN_NOM, "^DB.*") |
-         str_detect(PANGOLIN_NOM, "^DE.*") |
-         str_detect(PANGOLIN_NOM, "^DF.*") |
-         str_detect(PANGOLIN_NOM, "^DG.*") |
-         str_detect(PANGOLIN_NOM, "^DH.*") |
-         str_detect(PANGOLIN_NOM, "^DJ.*") |
-         str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*") |
-         str_detect(PANGOLIN_NOM, "^DM.*") |
-         str_detect(PANGOLIN_NOM, "^DN.*") |
-         str_detect(PANGOLIN_NOM, "^DP.*") |
-         str_detect(PANGOLIN_NOM, "^DQ.*") |
-         str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*") |
-         str_detect(PANGOLIN_NOM, "^DU.*") |
-         str_detect(PANGOLIN_NOM, "^DW.*") |
-         str_detect(PANGOLIN_NOM, "^DY.*") |
-         str_detect(PANGOLIN_NOM, "^DZ.*") |
-         str_detect(PANGOLIN_NOM, "^EA.*") |
-         str_detect(PANGOLIN_NOM, "^EB.*") |
-         str_detect(PANGOLIN_NOM, "^EC.*") |
-         str_detect(PANGOLIN_NOM, "^ED.*") |
-         str_detect(PANGOLIN_NOM, "^EE.*") |
-         str_detect(PANGOLIN_NOM, "^EF.*") |
-         str_detect(PANGOLIN_NOM, "^BA.2*") |
-         str_detect(PANGOLIN_NOM, "^BG.*") |
-         str_detect(PANGOLIN_NOM, "^BH.*") |
-         str_detect(PANGOLIN_NOM, "^BJ.*") |
-         str_detect(PANGOLIN_NOM, "^BL.*") |
-         str_detect(PANGOLIN_NOM, "^BM.*") |
-         str_detect(PANGOLIN_NOM, "^BN.*") |
-         str_detect(PANGOLIN_NOM, "^BP.*") |
-         str_detect(PANGOLIN_NOM, "^BR.*") |
-         str_detect(PANGOLIN_NOM, "^BS.*") |
-         str_detect(PANGOLIN_NOM, "^BY.*") |
-         str_detect(PANGOLIN_NOM, "^CA.*") |
-         str_detect(PANGOLIN_NOM, "^CB.*") |
-         str_detect(PANGOLIN_NOM, "^CH.*") |
-         str_detect(PANGOLIN_NOM, "^CJ.*") |
-         str_detect(PANGOLIN_NOM, "^CM.*") |
-         str_detect(PANGOLIN_NOM, "^CV.*") |
-         str_detect(PANGOLIN_NOM, "^DD.*") |
-         str_detect(PANGOLIN_NOM, "^DS.*") |
-         str_detect(PANGOLIN_NOM, "^DV.*")) %>%
-# Keep omicron only
-  #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
-  # Drop BA.1
-  #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>% 
+  # Keep BA.5 and BA.2.75
+  filter(PANGOLIN_NOM %in% pango_str) %>% 
+  # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(RES_CDC_INFB_CT, "Artic")) %>%
   # Trenger også å lage Virus name
@@ -337,83 +119,9 @@ SEQUENCEID_virus_mapping_Artic <- BN %>%
 
 SEQUENCEID_virus_mapping_Nano <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 
-    # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
-         str_detect(PANGOLIN_NOM, "^BE.*") | 
-         str_detect(PANGOLIN_NOM, "^BF.*") | 
-         str_detect(PANGOLIN_NOM, "^BK.*") |
-         str_detect(PANGOLIN_NOM, "^BQ.*") | 
-         str_detect(PANGOLIN_NOM, "^BT.*") |
-         str_detect(PANGOLIN_NOM, "^BU.*") |
-         str_detect(PANGOLIN_NOM, "^BV.*") |
-         str_detect(PANGOLIN_NOM, "^BW.*") |
-         str_detect(PANGOLIN_NOM, "^BZ.*") | 
-         str_detect(PANGOLIN_NOM, "^CC.*") |
-         str_detect(PANGOLIN_NOM, "^CD.*") |
-         str_detect(PANGOLIN_NOM, "^CE.*") |
-         str_detect(PANGOLIN_NOM, "^CF.*") |
-         str_detect(PANGOLIN_NOM, "^CG.*") |
-         str_detect(PANGOLIN_NOM, "^CK.*") |
-         str_detect(PANGOLIN_NOM, "^CL.*") |
-         str_detect(PANGOLIN_NOM, "^CN.*") |
-         str_detect(PANGOLIN_NOM, "^CP.*") |
-         str_detect(PANGOLIN_NOM, "^CQ.*") |
-         str_detect(PANGOLIN_NOM, "^CR.*") |
-         str_detect(PANGOLIN_NOM, "^CT.*") |
-         str_detect(PANGOLIN_NOM, "^CU.*") |
-         str_detect(PANGOLIN_NOM, "^CW.*") |
-         str_detect(PANGOLIN_NOM, "^CY.*") |
-         str_detect(PANGOLIN_NOM, "^CZ.*") |
-         str_detect(PANGOLIN_NOM, "^DA.*") |
-         str_detect(PANGOLIN_NOM, "^DB.*") |
-         str_detect(PANGOLIN_NOM, "^DE.*") |
-         str_detect(PANGOLIN_NOM, "^DF.*") |
-         str_detect(PANGOLIN_NOM, "^DG.*") |
-         str_detect(PANGOLIN_NOM, "^DH.*") |
-         str_detect(PANGOLIN_NOM, "^DJ.*") |
-         str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*") |
-         str_detect(PANGOLIN_NOM, "^DM.*") |
-         str_detect(PANGOLIN_NOM, "^DN.*") |
-         str_detect(PANGOLIN_NOM, "^DP.*") |
-         str_detect(PANGOLIN_NOM, "^DQ.*") |
-         str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*") |
-         str_detect(PANGOLIN_NOM, "^DU.*") |
-         str_detect(PANGOLIN_NOM, "^DW.*") |
-         str_detect(PANGOLIN_NOM, "^DY.*") |
-         str_detect(PANGOLIN_NOM, "^DZ.*") |
-         str_detect(PANGOLIN_NOM, "^EA.*") |
-         str_detect(PANGOLIN_NOM, "^EB.*") |
-         str_detect(PANGOLIN_NOM, "^EC.*") |
-         str_detect(PANGOLIN_NOM, "^ED.*") |
-         str_detect(PANGOLIN_NOM, "^EE.*") |
-         str_detect(PANGOLIN_NOM, "^EF.*") |
-         str_detect(PANGOLIN_NOM, "^BA.2*") |
-         str_detect(PANGOLIN_NOM, "^BG.*") |
-         str_detect(PANGOLIN_NOM, "^BH.*") |
-         str_detect(PANGOLIN_NOM, "^BJ.*") |
-         str_detect(PANGOLIN_NOM, "^BL.*") |
-         str_detect(PANGOLIN_NOM, "^BM.*") |
-         str_detect(PANGOLIN_NOM, "^BN.*") |
-         str_detect(PANGOLIN_NOM, "^BP.*") |
-         str_detect(PANGOLIN_NOM, "^BR.*") |
-         str_detect(PANGOLIN_NOM, "^BS.*") |
-         str_detect(PANGOLIN_NOM, "^BY.*") |
-         str_detect(PANGOLIN_NOM, "^CA.*") |
-         str_detect(PANGOLIN_NOM, "^CB.*") |
-         str_detect(PANGOLIN_NOM, "^CH.*") |
-         str_detect(PANGOLIN_NOM, "^CJ.*") |
-         str_detect(PANGOLIN_NOM, "^CM.*") |
-         str_detect(PANGOLIN_NOM, "^CV.*") |
-         str_detect(PANGOLIN_NOM, "^DD.*") |
-         str_detect(PANGOLIN_NOM, "^DS.*") |
-         str_detect(PANGOLIN_NOM, "^DV.*")) %>%
-  # Keep omicron only
-  #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
-  # Drop BA.1
-  #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>% 
+  # Keep BA.5 and BA.2.75
+  filter(PANGOLIN_NOM %in% pango_str) %>% 
+  # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(SEKV_OPPSETT_NANOPORE, "Nano")) %>%
   # Trenger også å lage Virus name
@@ -696,83 +404,9 @@ SEQUENCEID_virus_mapping <- bind_rows(
 # First get the Eksterne metadata
 eksterne_meta <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5
-    # filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | str_detect(PANGOLIN_NOM, "^BE.*") | str_detect(PANGOLIN_NOM, "^BK.*") | str_detect(PANGOLIN_NOM, "^BF.*") | str_detect(PANGOLIN_NOM, "^BQ.*")  | str_detect(PANGOLIN_NOM, "^BV.*") | str_detect(PANGOLIN_NOM, "^CF.*")) %>% 
-  filter(str_detect(PANGOLIN_NOM, "^BA.5.*") | 
-         str_detect(PANGOLIN_NOM, "^BE.*") | 
-         str_detect(PANGOLIN_NOM, "^BF.*") | 
-         str_detect(PANGOLIN_NOM, "^BK.*") |
-         str_detect(PANGOLIN_NOM, "^BQ.*") | 
-         str_detect(PANGOLIN_NOM, "^BT.*") |
-         str_detect(PANGOLIN_NOM, "^BU.*") |
-         str_detect(PANGOLIN_NOM, "^BV.*") |
-         str_detect(PANGOLIN_NOM, "^BW.*") |
-         str_detect(PANGOLIN_NOM, "^BZ.*") | 
-         str_detect(PANGOLIN_NOM, "^CC.*") |
-         str_detect(PANGOLIN_NOM, "^CD.*") |
-         str_detect(PANGOLIN_NOM, "^CE.*") |
-         str_detect(PANGOLIN_NOM, "^CF.*") |
-         str_detect(PANGOLIN_NOM, "^CG.*") |
-         str_detect(PANGOLIN_NOM, "^CK.*") |
-         str_detect(PANGOLIN_NOM, "^CL.*") |
-         str_detect(PANGOLIN_NOM, "^CN.*") |
-         str_detect(PANGOLIN_NOM, "^CP.*") |
-         str_detect(PANGOLIN_NOM, "^CQ.*") |
-         str_detect(PANGOLIN_NOM, "^CR.*") |
-         str_detect(PANGOLIN_NOM, "^CT.*") |
-         str_detect(PANGOLIN_NOM, "^CU.*") |
-         str_detect(PANGOLIN_NOM, "^CW.*") |
-         str_detect(PANGOLIN_NOM, "^CY.*") |
-         str_detect(PANGOLIN_NOM, "^CZ.*") |
-         str_detect(PANGOLIN_NOM, "^DA.*") |
-         str_detect(PANGOLIN_NOM, "^DB.*") |
-         str_detect(PANGOLIN_NOM, "^DE.*") |
-         str_detect(PANGOLIN_NOM, "^DF.*") |
-         str_detect(PANGOLIN_NOM, "^DG.*") |
-         str_detect(PANGOLIN_NOM, "^DH.*") |
-         str_detect(PANGOLIN_NOM, "^DJ.*") |
-         str_detect(PANGOLIN_NOM, "^DK.*") |
-         str_detect(PANGOLIN_NOM, "^DL.*") |
-         str_detect(PANGOLIN_NOM, "^DM.*") |
-         str_detect(PANGOLIN_NOM, "^DN.*") |
-         str_detect(PANGOLIN_NOM, "^DP.*") |
-         str_detect(PANGOLIN_NOM, "^DQ.*") |
-         str_detect(PANGOLIN_NOM, "^DR.*") |
-         str_detect(PANGOLIN_NOM, "^DT.*") |
-         str_detect(PANGOLIN_NOM, "^DU.*") |
-         str_detect(PANGOLIN_NOM, "^DW.*") |
-         str_detect(PANGOLIN_NOM, "^DY.*") |
-         str_detect(PANGOLIN_NOM, "^DZ.*") |
-         str_detect(PANGOLIN_NOM, "^EA.*") |
-         str_detect(PANGOLIN_NOM, "^EB.*") |
-         str_detect(PANGOLIN_NOM, "^EC.*") |
-         str_detect(PANGOLIN_NOM, "^ED.*") |
-         str_detect(PANGOLIN_NOM, "^EE.*") |
-         str_detect(PANGOLIN_NOM, "^EF.*") |
-         str_detect(PANGOLIN_NOM, "^BA.2*") |
-         str_detect(PANGOLIN_NOM, "^BG.*") |
-         str_detect(PANGOLIN_NOM, "^BH.*") |
-         str_detect(PANGOLIN_NOM, "^BJ.*") |
-         str_detect(PANGOLIN_NOM, "^BL.*") |
-         str_detect(PANGOLIN_NOM, "^BM.*") |
-         str_detect(PANGOLIN_NOM, "^BN.*") |
-         str_detect(PANGOLIN_NOM, "^BP.*") |
-         str_detect(PANGOLIN_NOM, "^BR.*") |
-         str_detect(PANGOLIN_NOM, "^BS.*") |
-         str_detect(PANGOLIN_NOM, "^BY.*") |
-         str_detect(PANGOLIN_NOM, "^CA.*") |
-         str_detect(PANGOLIN_NOM, "^CB.*") |
-         str_detect(PANGOLIN_NOM, "^CH.*") |
-         str_detect(PANGOLIN_NOM, "^CJ.*") |
-         str_detect(PANGOLIN_NOM, "^CM.*") |
-         str_detect(PANGOLIN_NOM, "^CV.*") |
-         str_detect(PANGOLIN_NOM, "^DD.*") |
-         str_detect(PANGOLIN_NOM, "^DS.*") |
-         str_detect(PANGOLIN_NOM, "^DV.*")) %>%
-  # Keep omicron only
-  #filter(str_detect(PANGOLIN_NOM, "BA.*") | str_detect(PANGOLIN_NOM, "B.1.1.529")) %>% 
-  # Drop BA.1
-  #filter(str_detect(PANGOLIN_NOM, "BA.1.*", negate = TRUE)) %>%  
+  # Keep BA.5 and BA.2.75
+  filter(PANGOLIN_NOM %in% pango_str) %>% 
+  # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(KEY, "SUS") | str_detect(KEY, "STO") | str_detect(KEY, "UNN") | str_detect(KEY, "HUS")) %>% 
   # Select final columns
