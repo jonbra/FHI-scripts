@@ -10,88 +10,22 @@ gr <- as(seqinfo(fa), "GRanges")
 # Load the metadata from the Entire Gisaid database
 metadata_Gisaid <- read_tsv("/media/jonr/SATA6TB/Gisaid/metadata.tsv")
 
-# Sett minimumsdato
-# Denne trekker 2 måneder fra dagens dato
-#min_date <- Sys.Date() %m-% months(2)
 
-# Filter the metadata
+# Read lineage descriptions from GitHub
+pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
+
+# Create list of BA.5 and BA.2.75 lineages for the Nextstrain build file
+pango_str <- pango %>% 
+  # Get the BA.5's
+  filter(str_detect(Description, "B.1.1.529.5") | str_detect(Description, "B.1.1.529.2.75")) %>% 
+  # Remove some withdrawn lineages
+  filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
+  # Pull all the aliases into a character vector
+  pull(Lineage)
+
+# Filter the metadata for BA.5 and BA.2
 metadata_filtered <- metadata_Gisaid %>% 
-  # Keep omicron only
-  # filter(str_detect(`Pango lineage`, "BA.*") | str_detect(`Pango lineage`, "B.1.1.529")) %>% 
-  # Drop BA.1
-  # filter(str_detect(`Pango lineage`, "BA.1.*", negate = TRUE))
-  # Keep BA.5 and BA.2.75*
-  filter(str_detect(`Pango lineage`, "^BA.5.*") | 
-         str_detect(`Pango lineage`, "^BE.*") | 
-         str_detect(`Pango lineage`, "^BF.*") | 
-         str_detect(`Pango lineage`, "^BK.*") | 
-         str_detect(`Pango lineage`, "^BQ.*") | 
-         str_detect(`Pango lineage`, "^BT.*") |
-         str_detect(`Pango lineage`, "^BU.*") |
-         str_detect(`Pango lineage`, "^BV.*") |
-         str_detect(`Pango lineage`, "^BW.*") |
-         str_detect(`Pango lineage`, "^BZ.*") | 
-         str_detect(`Pango lineage`, "^CC.*") |
-         str_detect(`Pango lineage`, "^CD.*") |
-         str_detect(`Pango lineage`, "^CE.*") |
-         str_detect(`Pango lineage`, "^CF.*") |
-         str_detect(`Pango lineage`, "^CG.*") |
-         str_detect(`Pango lineage`, "^CK.*") |
-         str_detect(`Pango lineage`, "^CL.*") |
-         str_detect(`Pango lineage`, "^CN.*") |
-         str_detect(`Pango lineage`, "^CP.*") |
-         str_detect(`Pango lineage`, "^CQ.*") |
-         str_detect(`Pango lineage`, "^CR.*") |
-         str_detect(`Pango lineage`, "^CT.*") |
-         str_detect(`Pango lineage`, "^CU.*") |
-         str_detect(`Pango lineage`, "^CW.*") |
-         str_detect(`Pango lineage`, "^CY.*") |
-         str_detect(`Pango lineage`, "^CZ.*") |
-         str_detect(`Pango lineage`, "^DA.*") |
-         str_detect(`Pango lineage`, "^DB.*") |
-         str_detect(`Pango lineage`, "^DE.*") |
-         str_detect(`Pango lineage`, "^DF.*") |
-         str_detect(`Pango lineage`, "^DG.*") |
-         str_detect(`Pango lineage`, "^DH.*") |
-         str_detect(`Pango lineage`, "^DJ.*") |
-         str_detect(`Pango lineage`, "^DK.*") |
-         str_detect(`Pango lineage`, "^DL.*") |
-         str_detect(`Pango lineage`, "^DM.*") |
-         str_detect(`Pango lineage`, "^DN.*") |
-         str_detect(`Pango lineage`, "^DP.*") |
-         str_detect(`Pango lineage`, "^DQ.*") |
-         str_detect(`Pango lineage`, "^DR.*") |
-         str_detect(`Pango lineage`, "^DT.*") |
-         str_detect(`Pango lineage`, "^DU.*") |
-         str_detect(`Pango lineage`, "^DW.*") |
-         str_detect(`Pango lineage`, "^DY.*") |
-         str_detect(`Pango lineage`, "^DZ.*") |
-         str_detect(`Pango lineage`, "^DZ.*") |
-         str_detect(`Pango lineage`, "^EA.*") |
-         str_detect(`Pango lineage`, "^EB.*") |
-         str_detect(`Pango lineage`, "^ED.*") |
-         str_detect(`Pango lineage`, "^EE.*") |
-         str_detect(`Pango lineage`, "^EF.*") |
-         str_detect(`Pango lineage`, "^BA.2*") |
-         str_detect(`Pango lineage`, "^BG.*") |
-         str_detect(`Pango lineage`, "^BH.*") |
-         str_detect(`Pango lineage`, "^BJ.*") |
-         str_detect(`Pango lineage`, "^BL.*") |
-         str_detect(`Pango lineage`, "^BM.*") |
-         str_detect(`Pango lineage`, "^BN.*") |
-         str_detect(`Pango lineage`, "^BP.*") |
-         str_detect(`Pango lineage`, "^BR.*") |
-         str_detect(`Pango lineage`, "^BS.*") |
-         str_detect(`Pango lineage`, "^BY.*") |
-         str_detect(`Pango lineage`, "^CA.*") |
-         str_detect(`Pango lineage`, "^CB.*") |
-         str_detect(`Pango lineage`, "^CH.*") |
-         str_detect(`Pango lineage`, "^CJ.*") |
-         str_detect(`Pango lineage`, "^CM.*") |
-         str_detect(`Pango lineage`, "^CV.*") |
-         str_detect(`Pango lineage`, "^DD.*") |
-         str_detect(`Pango lineage`, "^DS.*") |
-         str_detect(`Pango lineage`, "^DV.*"))
+  filter(`Pango lineage` %in% pango_str)
 
 # Clean up
 rm(metadata_Gisaid)
