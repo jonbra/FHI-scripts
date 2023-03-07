@@ -24,15 +24,9 @@ pango_str <- pango %>%
   pull(Lineage)
 
 # Filter the metadata for BA.5 and BA.2
-filtered <- metadata_Gisaid %>% 
-  filter(`Pango lineage` %in% pango_str)
-
-# Get the XBB.1.5 (this abbreviation is not linked to full pangos in the GitHub file. But used in the Gisaid metadata)
-XBB <- metadata_Gisaid %>% 
-  filter(str_detect(`Pango lineage`, "^XBB.1.5"))
-
-# Combine the metadata
-metadata_filtered <- bind_rows(filtered, XBB)
+# And get the XBB.1.5 (this abbreviation is not linked to full pangos in the GitHub file. But used in the Gisaid metadata)
+metadata_filtered <- metadata_Gisaid %>% 
+  filter(`Pango lineage` %in% pango_str | str_detect(`Pango lineage`, "^XBB.1.5"))
 
 # Clean up
 rm(metadata_Gisaid)
