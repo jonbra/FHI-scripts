@@ -49,8 +49,8 @@ BN <- BN %>% mutate_all(list(~na_if(.,""))) %>%
 # Først lage en mapping mellom KEY og virus name
 SEQUENCEID_virus_mapping_FHI <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 and BA.2.75
-  filter(PANGOLIN_NOM %in% pango_str) %>% 
+  # Keep BA.5 and BA.2.75 and XBB.1.5
+  filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB.1.5")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(SEKV_OPPSETT_SWIFT7, "FHI")) %>% 
@@ -75,8 +75,8 @@ SEQUENCEID_virus_mapping_FHI <- BN %>%
 
 SEQUENCEID_virus_mapping_MIK <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 and BA.2.75
-  filter(PANGOLIN_NOM %in% pango_str) %>% 
+  # Keep BA.5 and BA.2.75 and XBB.1.5
+  filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB.1.5")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(SEKV_OPPSETT_SWIFT7, "MIK")) %>% 
@@ -96,8 +96,8 @@ SEQUENCEID_virus_mapping_MIK <- BN %>%
 
 SEQUENCEID_virus_mapping_Artic <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 and BA.2.75
-  filter(PANGOLIN_NOM %in% pango_str) %>% 
+  # Keep BA.5 and BA.2.75 and XBB.1.5
+  filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB.1.5")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(RES_CDC_INFB_CT, "Artic")) %>%
@@ -119,8 +119,8 @@ SEQUENCEID_virus_mapping_Artic <- BN %>%
 
 SEQUENCEID_virus_mapping_Nano <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 and BA.2.75
-  filter(PANGOLIN_NOM %in% pango_str) %>% 
+  # Keep BA.5 and BA.2.75 and XBB.1.5
+  filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB.1.5")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(SEKV_OPPSETT_NANOPORE, "Nano")) %>%
@@ -404,8 +404,8 @@ SEQUENCEID_virus_mapping <- bind_rows(
 # First get the Eksterne metadata
 eksterne_meta <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
-  # Keep BA.5 and BA.2.75
-  filter(PANGOLIN_NOM %in% pango_str) %>% 
+  # Keep BA.5 and BA.2.75 and XBB.1.5
+  filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB.1.5")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(KEY, "SUS") | str_detect(KEY, "STO") | str_detect(KEY, "UNN") | str_detect(KEY, "HUS")) %>% 
