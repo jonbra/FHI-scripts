@@ -34,6 +34,11 @@ builds:
     country: Norway
     subsampling_scheme: omicron-bq-scheme
     
+  omicron_xbb:
+    region: global
+    country: Norway
+    subsampling_scheme: omicron-xbb-scheme
+    
   omicron_ba_five:
     region: global
     country: Norway
@@ -79,6 +84,19 @@ subsampling:
       max_sequences: 1000
       sampling_scheme: "--probabilistic-sampling"
       query: --query "(country != '{country}') & (pango_lineage.str.startswith('BQ.1'))"
+      priorities:
+        type: "proximity"
+        focus: "country"
+omicron-xbb-scheme:
+    country:
+      min_date: "--min-date 2023-01-01"
+      query: --query "(country == '{country}') & (pango_lineage.str.startswith('XBB.1.5'))"
+    related:
+      min_date: "--min-date 2023-01-01"
+      group_by: "country"
+      max_sequences: 1000
+      sampling_scheme: "--probabilistic-sampling"
+      query: --query "(country != '{country}') & (pango_lineage.str.startswith('XBB.1.5'))"
       priorities:
         type: "proximity"
         focus: "country"
