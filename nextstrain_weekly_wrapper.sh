@@ -29,10 +29,10 @@ Rscript /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/parse_Gisaid_fasta_an
 Rscript /home/jonr/Prosjekter/Nextstrain_mamba/FHI-scripts/get_data_from_BN.R
 
 # Update Nextstrain and conda environment
-nextstrain update conda
+#nextstrain update conda
 
 # Uodate the nextstrain cli
-python3 -m pip install --upgrade nextstrain-cli
+#python3 -m pip install --upgrade nextstrain-cli
 
 # Pull the latest ncov Nextstrain updates from GitHub
 cd /home/jonr/Prosjekter/Nextstrain_mamba/ncov
