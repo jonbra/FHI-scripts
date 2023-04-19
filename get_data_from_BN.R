@@ -123,7 +123,7 @@ SEQUENCEID_virus_mapping_Nano <- BN %>%
   filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB.1.5")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
-  filter(str_detect(SEKV_OPPSETT_NANOPORE, "Nano")) %>%
+  filter(str_detect(SEKV_OPPSETT_NANOPORE, "Nano") | str_detect(SEKV_OPPSETT_NANOPORE, "^NGS") | str_detect(SEKV_OPPSETT_NANOPORE, "^SEQ") | str_detect(SEKV_OPPSETT_NANOPORE, "2023011301A")) %>%
   # Trenger også å lage Virus name
   # Lage kolonne for "year"
   separate(PROVE_TATT, into = c("Year", NA, NA), sep = "-", remove = FALSE) %>%
