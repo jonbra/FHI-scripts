@@ -14,19 +14,20 @@ metadata_Gisaid <- read_tsv("/media/jonr/SATA6TB/Gisaid/metadata.tsv")
 # Read lineage descriptions from GitHub
 pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
 
+# 2023.05.02: Dropping BA.5 and BA.2.75 builds
 # Create list of BA.5 and BA.2.75 lineages for the Nextstrain build file
-pango_str <- pango %>% 
-  # Get the BA.5's
-  filter(str_detect(Description, "B.1.1.529.5") | str_detect(Description, "B.1.1.529.2.75")) %>% 
-  # Remove some withdrawn lineages
-  filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
-  # Pull all the aliases into a character vector
-  pull(Lineage)
+#pango_str <- pango %>% 
+#  # Get the BA.5's
+#  filter(str_detect(Description, "B.1.1.529.5") | str_detect(Description, "B.1.1.529.2.75")) %>% 
+#  # Remove some withdrawn lineages
+#  filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
+#  # Pull all the aliases into a character vector
+#  pull(Lineage)
 
 # Filter the metadata for BA.5 and BA.2
-# And get the XBB.1.5 (this abbreviation is not linked to full pangos in the GitHub file. But used in the Gisaid metadata)
+# And get the XBB lineages (this abbreviation is not linked to full pangos in the GitHub file. But used in the Gisaid metadata)
 metadata_filtered <- metadata_Gisaid %>% 
-  filter(`Pango lineage` %in% pango_str | str_detect(`Pango lineage`, "^XBB.1.5"))
+  filter(str_detect(`Pango lineage`, "^XBB"))
 
 # Clean up
 rm(metadata_Gisaid)
