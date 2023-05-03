@@ -39,9 +39,12 @@ git pull origin master
 nextstrain build . --configfile my_profiles/omicron/builds.yaml --cores all --forceall
 
 # Rename the final auspice files
-mv auspice/ncov_omicron_ba_five_tip-frequencies.json auspice/$3-ncov_omicron_ba_five_tip-frequencies.json
-mv auspice/ncov_omicron_ba_five.json auspice/$3-ncov_omicron_ba_five.json
-mv auspice/ncov_omicron_ba_five_root-sequence.json auspice/$3-ncov_omicron_ba_five_root-sequence.json
-mv auspice/ncov_omicron_bq_tip-frequencies.json auspice/$3-ncov_omicron_bq_tip-frequencies.json
-mv auspice/ncov_omicron_bq.json auspice/$3-ncov_omicron_bq.json
-mv auspice/ncov_omicron_bq_root-sequence.json auspice/$3-ncov_omicron_bq_root-sequence.json
+mv auspice/ncov_omicron_xbb.json auspice/$3-ncov_omicron_xbb.json
+mv auspice/ncov_omicron_xbb_tip-frequencies.json auspice/$3-ncov_omicron_xbb_tip-frequencies.json
+mv auspice/ncov_omicron_xbb_root-sequence.json auspice/$3-ncov_omicron_xbb_root-sequence.json
+#mv auspice/ncov_omicron_ba_five_tip-frequencies.json auspice/$3-ncov_omicron_ba_five_tip-frequencies.json
+#mv auspice/ncov_omicron_ba_five.json auspice/$3-ncov_omicron_ba_five.json
+#mv auspice/ncov_omicron_ba_five_root-sequence.json auspice/$3-ncov_omicron_ba_five_root-sequence.json
+#mv auspice/ncov_omicron_bq_tip-frequencies.json auspice/$3-ncov_omicron_bq_tip-frequencies.json
+#mv auspice/ncov_omicron_bq.json auspice/$3-ncov_omicron_bq.json
+#mv auspice/ncov_omicron_bq_root-sequence.json auspice/$3-ncov_omicron_bq_root-sequence.json
