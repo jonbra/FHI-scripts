@@ -1,7 +1,7 @@
 pacman::p_load(tidyverse, phylotools)
 
 # Read lineage descriptions from GitHub
-pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
+#pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
 
 # 2023.05.02: Dropping BA.5 and BA.2.75 builds
 # Create list of BA.5 and BA.2.75 lineages for the Nextstrain build file
@@ -34,7 +34,8 @@ Artic_fastas <- tibble(
 load("/mnt/N/Virologi/JonBrate/Prosjekter/BN.RData")
 
 # Convert empty strings to NA and clean up
-BN <- BN %>% mutate_all(list(~na_if(.,""))) %>% 
+BN <- BN %>% #mutate_all(list(~na_if(.,""))) %>% 
+  mutate(GISAID_EPI_ISL = na_if(GISAID_EPI_ISL, "")) %>% 
   # Endre Trøndelag til Trondelag
   mutate("FYLKENAVN" = str_replace(FYLKENAVN, "Tr\xf8ndelag", "Trondelag")) %>%
   # Endre Møre og Romsdal
