@@ -36,7 +36,9 @@ cd /home/jonr/Prosjekter/Nextstrain_mamba/ncov
 git pull origin master
 
 # Start the build
-nextstrain build . clean --configfile my_profiles/omicron/builds.yaml --cores all --forceall
+# First clean up old files
+nextstrain build . clean --configfile my_profiles/omicron/builds.yaml
+# And then start the build
 nextstrain build . --configfile my_profiles/omicron/builds.yaml --cores all --forceall
 
 # Rename the final auspice files
