@@ -53,5 +53,5 @@ mv auspice/ncov_omicron_xbb_root-sequence.json auspice/$3-ncov_omicron_xbb_root-
 #mv auspice/ncov_omicron_bq_root-sequence.json auspice/$3-ncov_omicron_bq_root-sequence.json
 
 # Uploading the builds
-# nextstrain login
-# nextstrain remote upload nextstrain.org/groups/niph 2023.06.13-ncov_omicron_xbb*
+nextstrain login
+nextstrain remote upload nextstrain.org/groups/niph auspice/$3-ncov_omicron_xbb*
