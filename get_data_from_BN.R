@@ -1,7 +1,16 @@
 pacman::p_load(tidyverse, phylotools)
 
 # Read lineage descriptions from GitHub
-#pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
+pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
+
+# 2023.08.16: Including AXX and all abbreviations
+pango_str <- pango %>% 
+  # Get the XBB's
+  filter(str_detect(Description, "XBB") | str_detect(Lineage, "^XBB")) %>% 
+  # Remove some withdrawn lineages
+  filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
+  # Pull all the aliases into a character vector
+  pull(Lineage)
 
 # 2023.05.02: Dropping BA.5 and BA.2.75 builds
 # Create list of BA.5 and BA.2.75 lineages for the Nextstrain build file
@@ -52,7 +61,7 @@ BN <- BN %>% #mutate_all(list(~na_if(.,""))) %>%
 SEQUENCEID_virus_mapping_FHI <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
   # Keep XBB only
-  filter(str_detect(PANGOLIN_NOM, "^XBB")) %>% 
+  filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(SEKV_OPPSETT_SWIFT7, "FHI")) %>% 
@@ -78,7 +87,7 @@ SEQUENCEID_virus_mapping_FHI <- BN %>%
 SEQUENCEID_virus_mapping_MIK <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
   # Keep XBB only
-  filter(str_detect(PANGOLIN_NOM, "^XBB")) %>% 
+  filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(SEKV_OPPSETT_SWIFT7, "MIK")) %>% 
@@ -99,7 +108,7 @@ SEQUENCEID_virus_mapping_MIK <- BN %>%
 SEQUENCEID_virus_mapping_Artic <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
   # Keep XBB only
-  filter(str_detect(PANGOLIN_NOM, "^XBB")) %>% 
+  filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(RES_CDC_INFB_CT, "Artic")) %>%
@@ -122,7 +131,7 @@ SEQUENCEID_virus_mapping_Artic <- BN %>%
 SEQUENCEID_virus_mapping_Nano <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
   # Keep XBB only
-  filter(str_detect(PANGOLIN_NOM, "^XBB")) %>% 
+  filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(SEKV_OPPSETT_NANOPORE, "Nano") | str_detect(SEKV_OPPSETT_NANOPORE, "^NGS") | str_detect(SEKV_OPPSETT_NANOPORE, "^SEQ") | str_detect(SEKV_OPPSETT_NANOPORE, "2023011301A")) %>%
@@ -407,7 +416,7 @@ SEQUENCEID_virus_mapping <- bind_rows(
 eksterne_meta <- BN %>%
   filter(PROVE_TATT >= "2022-01-01") %>% 
   # Keep XBB only
-  filter(str_detect(PANGOLIN_NOM, "^XBB")) %>% 
+  filter(PANGOLIN_NOM %in% pango_str | str_detect(PANGOLIN_NOM, "^XBB")) %>% 
   # Keep only samples NOT submitted to Gisaid
   filter(is.na(GISAID_EPI_ISL)) %>% 
   filter(str_detect(KEY, "SUS") | str_detect(KEY, "STO") | str_detect(KEY, "UNN") | str_detect(KEY, "HUS")) %>% 

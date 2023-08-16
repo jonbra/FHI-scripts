@@ -14,6 +14,19 @@ metadata_Gisaid <- read_tsv("/media/jonr/SATA6TB/Gisaid/metadata.tsv")
 # Read lineage descriptions from GitHub
 pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
 
+# 2023.08.16: Including XBB abbreviations
+pango_str <- pango %>% 
+  # Get the XBB's
+  filter(str_detect(Description, "XBB")) %>% 
+  # Remove some withdrawn lineages
+  filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
+  # Pull all the aliases into a character vector
+  pull(Lineage)
+
+# Filter the metadata for XBB and abbrevations
+metadata_filtered <- metadata_Gisaid %>% 
+  filter(`Pango lineage` %in% pango_str | str_detect(`Pango lineage`, "^XBB"))
+
 # 2023.05.02: Dropping BA.5 and BA.2.75 builds
 # Create list of BA.5 and BA.2.75 lineages for the Nextstrain build file
 #pango_str <- pango %>% 
@@ -23,11 +36,6 @@ pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango
 #  filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
 #  # Pull all the aliases into a character vector
 #  pull(Lineage)
-
-# Filter the metadata for BA.5 and BA.2
-# And get the XBB lineages (this abbreviation is not linked to full pangos in the GitHub file. But used in the Gisaid metadata)
-metadata_filtered <- metadata_Gisaid %>% 
-  filter(str_detect(`Pango lineage`, "^XBB"))
 
 # Clean up
 rm(metadata_Gisaid)
