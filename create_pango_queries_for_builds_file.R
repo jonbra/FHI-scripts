@@ -3,13 +3,22 @@ library(tidyverse)
 # Read lineage descriptions from GitHub
 pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
 
+# 2023.11.08: Include BA.2.86 abbreviations
+pango_str <- pango %>% 
+  # Get the BA.2.86's
+  filter(str_detect(Description, "B.1.1.529.2.86") | str_detect(Lineage, "^BA.2.86")) %>% 
+  # Remove any withdrawn lineages
+  filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
+  # Pull all the aliases into a character vector
+  pull(Lineage)
+
 # 2023.08.16: Including XBB abbreviations
 # Create list of XBB lineages for the Nextstrain build file. This is copied and manually hardcoded into the build file.
-pango_str <- pango %>% 
+pango_str <- pango %>%
   # Get the XBB's
-  filter(str_detect(Description, "XBB") | str_detect(Lineage, "^XBB")) %>% 
+  filter(str_detect(Description, "XBB") | str_detect(Lineage, "^XBB")) %>%
   # Remove some withdrawn lineages
-  filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
+  filter(str_detect(Lineage, "\\*", negate = TRUE)) %>%
   # Pull all the aliases into a character vector
   pull(Lineage)
 

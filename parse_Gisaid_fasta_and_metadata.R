@@ -14,18 +14,27 @@ metadata_Gisaid <- read_tsv("/media/jonr/SATA6TB/Gisaid/metadata.tsv")
 # Read lineage descriptions from GitHub
 pango <- read_delim(file = "https://raw.githubusercontent.com/cov-lineages/pango-designation/master/lineage_notes.txt")
 
-# 2023.08.16: Including XBB abbreviations
+# 2023.11.08: Include BA.2.86 abbreviations
 pango_str <- pango %>% 
-  # Get the XBB's
-  filter(str_detect(Description, "XBB")) %>% 
-  # Remove some withdrawn lineages
+  # Get the BA.2.86's
+  filter(str_detect(Description, "B.1.1.529.2.86") | str_detect(Lineage, "^BA.2.86")) %>% 
+  # Remove any withdrawn lineages
   filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
   # Pull all the aliases into a character vector
   pull(Lineage)
 
-# Filter the metadata for XBB and abbrevations
+# 2023.08.16: Including XBB abbreviations
+# pango_str <- pango %>% 
+#   # Get the XBB's
+#   filter(str_detect(Description, "XBB")) %>% 
+#   # Remove some withdrawn lineages
+#   filter(str_detect(Lineage, "\\*", negate = TRUE)) %>% 
+#   # Pull all the aliases into a character vector
+#   pull(Lineage)
+
+# Filter the metadata for BA.2.86 and abbrevations
 metadata_filtered <- metadata_Gisaid %>% 
-  filter(`Pango lineage` %in% pango_str | str_detect(`Pango lineage`, "^XBB"))
+  filter(`Pango lineage` %in% pango_str | str_detect(`Pango lineage`, "^BA.2.86"))
 
 # 2023.05.02: Dropping BA.5 and BA.2.75 builds
 # Create list of BA.5 and BA.2.75 lineages for the Nextstrain build file
