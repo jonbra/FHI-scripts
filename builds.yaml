@@ -69,7 +69,7 @@ builds:
 subsampling:
 
   omicron_ba_2_86-scheme:
-      country:
+    country:
       min_date: "--min-date 2023-01-01"
       query: --query "(country == '{country}') & (pango_lineage in {pango_lineage})"
 #      query: --query "(country == '{country}') & (pango_lineage.str.startswith('XBB'))"
