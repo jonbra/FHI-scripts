@@ -187,11 +187,11 @@ frequencies:
 # See the 'example_advanced_customization' builds.yaml
 
 # Change "columns" to "location" for augur traits when having only a single country
-diagnostic:
-  skip_inputs_arg=_get_skipped_inputs_for_diagnostic: true
-  clock_filter: 20 # 20 default
-  snp_clusters: 1 # 1 default
-  contamination: 5 # 5 default
+#diagnostic:
+#  skip_inputs_arg=_get_skipped_inputs_for_diagnostic: true
+#  clock_filter: 20 # 20 default
+#  snp_clusters: 1 # 1 default
+#  contamination: 5 # 5 default
 
 
 traits:
