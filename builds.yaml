@@ -72,14 +72,14 @@ subsampling:
     country:
       min_date: "--min-date 2023-01-01"
       query: --query "(country == '{country}') & (pango_lineage in {pango_lineage})"
-#      query: --query "(country == '{country}') & (pango_lineage.str.startswith('XBB'))"
+      # Skip diagnostics rule for in-house Norwegian sequences only
+      skip_diagnostics: True
     related:
       min_date: "--min-date 2023-01-01"
       group_by: "country"
       max_sequences: 1000
       sampling_scheme: "--probabilistic-sampling"
       query: --query "(country != '{country}') & (pango_lineage in {pango_lineage})"
-#      query: --query "(country != '{country}') & (pango_lineage.str.startswith('XBB'))"
       priorities:
         type: "proximity"
         focus: "country"
