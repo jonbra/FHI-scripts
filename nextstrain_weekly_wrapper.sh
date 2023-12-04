@@ -42,9 +42,9 @@ nextstrain build . clean --configfile my_profiles/omicron/builds.yaml
 nextstrain build . --configfile my_profiles/omicron/builds.yaml --cores all --forceall
 
 # Rename the final auspice files
-#mv auspice/ncov_omicron_xbb.json auspice/$3-ncov_omicron_xbb.json
-#mv auspice/ncov_omicron_xbb_tip-frequencies.json auspice/$3-ncov_omicron_xbb_tip-frequencies.json
-#mv auspice/ncov_omicron_xbb_root-sequence.json auspice/$3-ncov_omicron_xbb_root-sequence.json
+mv auspice/ncov_omicron_ba_2_86.json auspice/$3-ncov_omicron_ba_2_86.json
+mv auspice/ncov_omicron_ba_2_86_tip-frequencies.json auspice/$3-ncov_omicron_ba_2_86_tip-frequencies.json
+mv auspice/ncov_omicron_ba_2_86_root-sequence.json auspice/$3-ncov_omicron_ba_2_86_root-sequence.json
 #mv auspice/ncov_omicron_ba_five_tip-frequencies.json auspice/$3-ncov_omicron_ba_five_tip-frequencies.json
 #mv auspice/ncov_omicron_ba_five.json auspice/$3-ncov_omicron_ba_five.json
 #mv auspice/ncov_omicron_ba_five_root-sequence.json auspice/$3-ncov_omicron_ba_five_root-sequence.json
