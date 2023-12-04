@@ -10,7 +10,7 @@ git pull origin master
 cp builds.yaml /home/jonr/Prosjekter/Nextstrain_mamba/ncov/my_profiles/omicron/
 
 # Untar Gisaid files
-cd /media/jonr/SATA6TB/Gisaid/
+cd /media/jonr/SATA6TB1/Gisaid/
 tar -xf $1
 rm $1
 tar -xf $2
