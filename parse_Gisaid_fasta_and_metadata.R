@@ -2,13 +2,13 @@ pacman::p_load(tidyverse, Rsamtools, lubridate)
 
 # Open the fasta index connection from the script index_fasta.R
 # There needs to be a file with the same filename but ending with .fai in the folder
-fa <- FaFile("/media/jonr/SATA6TB/Gisaid/sequences.fasta")
+fa <- FaFile("/media/jonr/SATA6TB1/Gisaid/sequences.fasta")
 
 # Make a GRanges object
 gr <- as(seqinfo(fa), "GRanges")
 
 # Load the metadata from the Entire Gisaid database
-metadata_Gisaid <- read_tsv("/media/jonr/SATA6TB/Gisaid/metadata.tsv")
+metadata_Gisaid <- read_tsv("/media/jonr/SATA6TB1/Gisaid/metadata.tsv")
 
 
 # Read lineage descriptions from GitHub
